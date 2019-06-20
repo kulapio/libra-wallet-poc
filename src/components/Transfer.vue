@@ -58,79 +58,13 @@ export default {
     }
   },
   computed: {
-    etherscanLink () {
-      return this.getEtherscanLink()
-    }
   },
   async created () {
-    this.eth = new Eth()
-    await this.eth.init()
 
-    // Validate Metamask
-    if (this.validate() === false) {
-      return
-    }
-
-    this.network = this.eth.networkName
   },
   methods: {
     back () {
       router.push({ name: 'Wallet' })
-    },
-    validate () {
-      if (this.eth.web3 === null) {
-        this.alertNoWeb3Wallet()
-        return false
-      }
-      if (this.eth.userAddress === '') {
-        this.alertWeb3Login()
-        return false
-      }
-      return true
-    },
-    alertNoWeb3Wallet () {
-      Toast.open({
-        message: 'No MetaMask installed!',
-        position: 'is-bottom',
-        type: 'is-danger',
-        duration: '600000'
-      })
-    },
-    alertWeb3Login () {
-      Toast.open({
-        message: 'Please Login on MetaMask!',
-        position: 'is-bottom',
-        type: 'is-danger',
-        duration: '600000'
-      })
-    },
-    getEtherscanLink () {
-      let url = ''
-      switch (this.eth.networId) {
-        case 1:
-          url = `https://etherscan.io/tx/${this.transactionHash}`
-          break
-        case 3:
-          url = `https://ropsten.etherscan.io/tx/${this.transactionHash}`
-          break
-        case 4:
-          url = `https://rinkeby.etherscan.io/tx/${this.transactionHash}`
-          break
-        case 42:
-          url = `https://kovan.etherscan.io/tx/${this.transactionHash}`
-          break
-        default:
-          url = `https://etherscan.io/tx/${this.transactionHash}`
-      }
-      return url
-    },
-    openEtherScan () {
-      window.open(this.etherscanLink, '_blank')
-    }
-  },
-  watch: {
-    message (newValue) {
-      this.byteLength = this.eth.textToByteLength(newValue)
     }
   }
 }
