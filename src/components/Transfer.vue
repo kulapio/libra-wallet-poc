@@ -24,7 +24,7 @@
 
            <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="saveToEthereum">
+              <button class="button is-large is-success" @click="transfer">
                 Confirm
               </button>
 
@@ -43,6 +43,8 @@
 import Eth from '@/eth'
 import { Toast } from 'buefy'
 import router from '../router'
+import config from '../config'
+import axios from 'axios'
 
 export default {
   name: 'Wallet',
@@ -53,7 +55,7 @@ export default {
       message: '',
       byteLength: '',
       transactionHash: '',
-      toAddress: '',
+      toAddress: '6f0643a3a16ca18215bc8146d3d28c2f86101a4573181d175444e1b5ffdf881d',
       amount: '10'
     }
   },
@@ -64,6 +66,21 @@ export default {
   },
   methods: {
     back () {
+      router.push({ name: 'Wallet' })
+    },
+    async transfer () {
+      Toast.open({
+        message: 'Trasnfering...',
+        position: 'is-top',
+        type: 'is-success'
+      })
+      let response = await axios.post(config.api + '/transfer', {
+        fromAddress: this.$store.state.userAddress,
+        mnemonic: this.$store.state.mnemonic,
+        toAddress: this.toAddress,
+        amount: this.amount
+      })
+      console.log('response', response)
       router.push({ name: 'Wallet' })
     }
   }

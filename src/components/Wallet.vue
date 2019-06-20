@@ -93,12 +93,12 @@ export default {
       this.$store.state.mnemonic = this.userData.mnemonic
 
       await this.queryBalance()
+      await this.updatePersistance()
 
     // Create new wallet
     } else {
       await this.createNewWallet()
-      this.userData.update(this.$store.state.userAddress, this.$store.state.balance, this.$store.state.mnemonic)
-      this.userData.save()
+      await this.updatePersistance()
     }
   },
   methods: {
@@ -120,6 +120,10 @@ export default {
       let response = await axios.post(config.api + '/getBalance', {address: this.$store.state.userAddress})
       this.$store.state.balance = response.data.balance
       console.log('balance', this.$store.state.balance)
+    },
+    async updatePersistance () {
+      this.userData.update(this.$store.state.userAddress, this.$store.state.balance, this.$store.state.mnemonic)
+      this.userData.save()
     },
     openSend () {
       router.push({ name: 'Send' })
