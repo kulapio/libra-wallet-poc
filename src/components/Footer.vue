@@ -1,7 +1,7 @@
 <template>
   <div class="content has-text-centered">
     <p>
-      <strong>Powered</strong> by <a href="https://www.kulap.io">KULAP.io</a>, The Best Rate Decentralized Exchange.
+      <strong>Sponsored</strong> by <a href="https://www.kulap.io">KULAP.io</a>, The Best Rate Decentralized Exchange.
     </p>
   </div>
 </template>
