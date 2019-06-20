@@ -4,30 +4,49 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="user title">
-            Transfer
+            Wallet info
           </h1>
 
-          <section>
-            <b-field label="To">
-                <b-input v-model="toAddress" placeholder="receiver address"></b-input>
-            </b-field>
-
-            <b-field label="Amount">
-              <b-input placeholder="amount to transfer"
-                v-model="amount"
-                type="number"
-                min="1"
-                max="10000000000000">
-              </b-input>
-            </b-field>
-          </section>
+          <h2 class="subtitle">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  Your public Address
+                </p>
+                <a href="#" class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  <strong>{{ ipfsHash }}</strong>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <a class="card-footer-item" @click="copyAddress">Copy Address</a>
+                <a class="card-footer-item" @click="copyPublicLink">Copy Public Link</a>
+                <social-sharing :url="shareUrl"
+                  class="card-footer-item share"
+                  title="Hi there, this's my Libra Wallet!"
+                  description="Hi there, this's my Libra Wallet!"
+                  quote="Hi there, this's my Libra Wallet!"
+                  hashtags="Libra,Blockchain,Kulap"
+                  twitter-user="kulap"
+                  inline-template>
+                  <div>
+                    <network network="facebook">
+                      <i class="fa fa-facebook"></i>Share
+                    </network>
+                  </div>
+                </social-sharing>
+              </footer>
+            </div>
+          </h2>
 
            <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="saveToEthereum">
-                Confirm
-              </button>
-
               <button id="back_button" class="button is-large is-info" @click="back">
                 Back
               </button>
@@ -54,7 +73,9 @@ export default {
       byteLength: '',
       transactionHash: '',
       toAddress: '',
-      amount: '10'
+      amount: '10',
+      ipfsHash: '6f0643a3a16ca18215bc8146d3d28c2f86101a4573181d175444e1b5ffdf881d',
+      shareUrl: 'https://www.kulap.io/'
     }
   },
   computed: {
@@ -76,6 +97,25 @@ export default {
   methods: {
     back () {
       router.push({ name: 'Wallet' })
+    },
+    copyAddress () {
+      this.copyText(this.ipfsHash)
+    },
+    copyText (text) {
+      this.$copyText(text).then(function (e) {
+        Toast.open({
+          message: 'Copied!',
+          position: 'is-bottom',
+          type: 'is-success'
+        })
+      }, function (e) {
+        Toast.open({
+          duration: 5000,
+          message: 'Can\'t copy',
+          position: 'is-bottom',
+          type: 'is-danger'
+        })
+      })
     },
     validate () {
       if (this.eth.web3 === null) {
@@ -156,6 +196,39 @@ a {
   float: right;
 }
 
+.hero.is-primary .subtitle a:not(.button), .hero.is-primary .subtitle strong {
+  color: #7957d5;
+}
+
+.card {
+  margin-top: 25px;
+}
+
+.linkTable {
+  margin-top: 25px;
+}
+
+.fileUpload {
+  margin: 60px;
+}
+
+.dropFileLabel {
+  font-size: 32px;
+}
+
+.uploading {
+  margin: 80px;
+}
+
+.subtitle {
+  margin-top: 20px !important;
+}
+</style>
+
+<style>
+.label {
+  color: white !important;
+}
 .card {
   margin-top: 25px;
 }
@@ -170,7 +243,7 @@ a {
   cursor: pointer;
 }
 #back_button {
-  margin-left: 60px;
+  margin-left: 0px;
 }
 
 ._7zme ._7zoh {
@@ -206,11 +279,5 @@ a {
 #action_area {
   margin: 50px auto 0px auto;
   width: fit-content;
-}
-</style>
-
-<style>
-.label {
-  color: white !important;
 }
 </style>

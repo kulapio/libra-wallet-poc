@@ -25,7 +25,7 @@
                 Send
               </button>
 
-              <button id="receive_button" class="button is-large is-info" @click="saveToEthereum">
+              <button id="receive_button" class="button is-large is-info" @click="openReceive">
                 Receive
               </button>
             </p>
@@ -92,6 +92,9 @@ export default {
   methods: {
     openSend () {
       router.push({ name: 'Send' })
+    },
+    openReceive () {
+      router.push({ name: 'Receive' })
     },
     async saveToEthereum () {
       // Validate Metamask
