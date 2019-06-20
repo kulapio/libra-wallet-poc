@@ -21,7 +21,7 @@
               </header>
               <div class="card-content">
                 <div class="content">
-                  <strong>{{ ipfsHash }}</strong>
+                  <strong>{{ $store.state.userAddress }}</strong>
                 </div>
               </div>
               <footer class="card-footer">
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import Eth from '@/eth'
 import { Toast } from 'buefy'
 import router from '../router'
 
@@ -67,7 +66,6 @@ export default {
   name: 'Wallet',
   data () {
     return {
-      eth: null,
       network: null,
       message: '',
       byteLength: '',
@@ -75,31 +73,19 @@ export default {
       toAddress: '',
       amount: '10',
       ipfsHash: '6f0643a3a16ca18215bc8146d3d28c2f86101a4573181d175444e1b5ffdf881d',
-      shareUrl: 'https://www.kulap.io/'
+      shareUrl: 'https://dev.kulap.io/libra'
     }
   },
   computed: {
-    etherscanLink () {
-      return this.getEtherscanLink()
-    }
   },
   async created () {
-    this.eth = new Eth()
-    await this.eth.init()
-
-    // Validate Metamask
-    if (this.validate() === false) {
-      return
-    }
-
-    this.network = this.eth.networkName
   },
   methods: {
     back () {
       router.push({ name: 'Wallet' })
     },
     copyAddress () {
-      this.copyText(this.ipfsHash)
+      this.copyText(this.$store.state.userAddress)
     },
     copyText (text) {
       this.$copyText(text).then(function (e) {
@@ -116,61 +102,6 @@ export default {
           type: 'is-danger'
         })
       })
-    },
-    validate () {
-      if (this.eth.web3 === null) {
-        this.alertNoWeb3Wallet()
-        return false
-      }
-      if (this.eth.userAddress === '') {
-        this.alertWeb3Login()
-        return false
-      }
-      return true
-    },
-    alertNoWeb3Wallet () {
-      Toast.open({
-        message: 'No MetaMask installed!',
-        position: 'is-bottom',
-        type: 'is-danger',
-        duration: '600000'
-      })
-    },
-    alertWeb3Login () {
-      Toast.open({
-        message: 'Please Login on MetaMask!',
-        position: 'is-bottom',
-        type: 'is-danger',
-        duration: '600000'
-      })
-    },
-    getEtherscanLink () {
-      let url = ''
-      switch (this.eth.networId) {
-        case 1:
-          url = `https://etherscan.io/tx/${this.transactionHash}`
-          break
-        case 3:
-          url = `https://ropsten.etherscan.io/tx/${this.transactionHash}`
-          break
-        case 4:
-          url = `https://rinkeby.etherscan.io/tx/${this.transactionHash}`
-          break
-        case 42:
-          url = `https://kovan.etherscan.io/tx/${this.transactionHash}`
-          break
-        default:
-          url = `https://etherscan.io/tx/${this.transactionHash}`
-      }
-      return url
-    },
-    openEtherScan () {
-      window.open(this.etherscanLink, '_blank')
-    }
-  },
-  watch: {
-    message (newValue) {
-      this.byteLength = this.eth.textToByteLength(newValue)
     }
   }
 }
