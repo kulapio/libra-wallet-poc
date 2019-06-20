@@ -1,5 +1,5 @@
 <template>
-  <div class="SaveToEth">
+  <div class="Wallet">
     <section class="hero is-medium is-primary is-bold">
       <div class="hero-body">
         <div class="container">
@@ -62,7 +62,7 @@ import Eth from '@/eth'
 import { Toast } from 'buefy'
 
 export default {
-  name: 'SaveToEth',
+  name: 'Wallet',
   data () {
     return {
       eth: null,
