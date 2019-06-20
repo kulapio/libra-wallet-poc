@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png" width="400"> Send
+    <img src="../assets/logo.png" width="400">
     <Transfer/>
     <Footer />
   </div>

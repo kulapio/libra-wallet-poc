@@ -9,11 +9,12 @@
 
           <section>
             <b-field label="To">
-                <b-input v-model="toAddress"></b-input>
+                <b-input v-model="toAddress" placeholder="receiver address"></b-input>
             </b-field>
 
             <b-field label="Amount">
               <b-input placeholder="amount to transfer"
+                v-model="amount"
                 type="number"
                 min="1"
                 max="10000000000000">
@@ -51,7 +52,9 @@ export default {
       network: null,
       message: '',
       byteLength: '',
-      transactionHash: ''
+      transactionHash: '',
+      toAddress: '',
+      amount: '10'
     }
   },
   computed: {
