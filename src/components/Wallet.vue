@@ -62,6 +62,7 @@ import { Toast } from 'buefy'
 import router from '../router'
 import config from '../config'
 import axios from 'axios'
+import UserDataPersistance from '../userData/persistance'
 
 export default {
   name: 'Wallet',
@@ -71,7 +72,8 @@ export default {
       network: null,
       message: '',
       byteLength: '',
-      transactionHash: ''
+      transactionHash: '',
+      userData: null
     }
   },
   computed: {
@@ -80,29 +82,38 @@ export default {
     }
   },
   async created () {
-    console.log(config.api)
+    // Load from local storage
+    this.userData = new UserDataPersistance()
 
-    axios.post(config.api + '/createWallet', {
-    }).then(response => {
-      console.log(response.data)
-      this.$store.state.userAddress = response.data.address
-      this.$store.state.userAddressShort = response.data.address.substring(0, 5)
-      this.$store.state.balance = response.data.balance
-      this.$store.state.mnemonic = response.data.mnemonic
-    }).catch(error => {
-      console.log(error)
-    })
-    // this.eth = new Eth()
-    // await this.eth.init()
+    // Already exist
+    if (this.userData.userAddress !== '') {
+      this.$store.state.userAddress = this.userData.userAddress
+      this.$store.state.userAddressShort = this.userData.userAddress.substring(0, 5)
+      this.$store.state.balance = this.userData.balance
+      this.$store.state.mnemonic = this.userData.mnemonic
 
-    // // Validate Metamask
-    // if (this.validate() === false) {
-    //   return
-    // }
-
-    // this.network = this.eth.networkName
+    // Create new wallet
+    } else {
+      await this.createNewWallet()
+      this.userData.update(this.$store.state.userAddress, this.$store.state.balance, this.$store.state.mnemonic)
+      this.userData.save()
+    }
   },
   methods: {
+    async createNewWallet () {
+      console.log(config.api)
+
+      try {
+        let response = await axios.post(config.api + '/createWallet')
+        console.log(response.data)
+        this.$store.state.userAddress = response.data.address
+        this.$store.state.userAddressShort = response.data.address.substring(0, 5)
+        this.$store.state.balance = response.data.balance
+        this.$store.state.mnemonic = response.data.mnemonic
+      } catch (error) {
+        console.log(error)
+      }
+    },
     openSend () {
       router.push({ name: 'Send' })
     },
