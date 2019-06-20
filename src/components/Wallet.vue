@@ -21,7 +21,7 @@
 
           <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="saveToEthereum">
+              <button class="button is-large is-success" @click="openSend">
                 Send
               </button>
 
@@ -60,6 +60,7 @@
 <script>
 import Eth from '@/eth'
 import { Toast } from 'buefy'
+import router from '../router'
 
 export default {
   name: 'Wallet',
@@ -89,6 +90,9 @@ export default {
     this.network = this.eth.networkName
   },
   methods: {
+    openSend () {
+      router.push({ name: 'Send' })
+    },
     async saveToEthereum () {
       // Validate Metamask
       if (this.validate() === false) {
