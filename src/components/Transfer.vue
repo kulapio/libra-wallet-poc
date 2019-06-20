@@ -70,6 +70,7 @@ export default {
     },
     async transfer () {
       Toast.open({
+        duration: 7000,
         message: 'Trasnfering...',
         position: 'is-top',
         type: 'is-success'
