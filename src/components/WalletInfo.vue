@@ -66,13 +66,6 @@ export default {
   name: 'Wallet',
   data () {
     return {
-      network: null,
-      message: '',
-      byteLength: '',
-      transactionHash: '',
-      toAddress: '',
-      amount: '10',
-      ipfsHash: '6f0643a3a16ca18215bc8146d3d28c2f86101a4573181d175444e1b5ffdf881d',
       shareUrl: 'https://dev.kulap.io/libra'
     }
   },
@@ -102,6 +95,9 @@ export default {
           type: 'is-danger'
         })
       })
+    },
+    copyPublicLink () {
+      this.copyText(this.shareUrl)
     }
   }
 }
