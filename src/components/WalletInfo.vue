@@ -7,6 +7,12 @@
             Wallet info
           </h1>
 
+          <div>
+            <div id="qrcode_box">
+              <qrcode-vue :value="$store.state.userAddress" :size="size" background="#FFFFFF" level="H"></qrcode-vue>
+            </div>
+          </div>
+
           <h2 class="subtitle">
             <div class="card">
               <header class="card-header">
@@ -61,15 +67,20 @@
 <script>
 import { Toast } from 'buefy'
 import router from '../router'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
   name: 'Wallet',
   data () {
     return {
-      shareUrl: 'https://dev.kulap.io/libra'
+      shareUrl: 'https://dev.kulap.io/libra',
+      size: 300
     }
   },
   computed: {
+  },
+  components: {
+    QrcodeVue
   },
   async created () {
   },
@@ -149,6 +160,13 @@ a {
 
 .subtitle {
   margin-top: 20px !important;
+}
+
+#qrcode_box {
+  width: fit-content;
+  margin: 0 auto;
+  background: white;
+  padding: 17px;
 }
 </style>
 
