@@ -7,7 +7,7 @@
             Wallet info
           </h1>
 
-          <div>
+          <div class="container">
             <div id="qrcode_box">
               <qrcode-vue :value="$store.state.userAddress" :size="size" background="#FFFFFF" level="H"></qrcode-vue>
             </div>
@@ -74,7 +74,7 @@ export default {
   data () {
     return {
       shareUrl: 'https://dev.kulap.io/libra',
-      size: 300
+      size: 260
     }
   },
   computed: {

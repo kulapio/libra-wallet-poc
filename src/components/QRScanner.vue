@@ -12,7 +12,7 @@
           <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
               <button class="button is-large is-success" @click="sendWithManualAddress">
-                Key in address yourself
+                Manual
               </button>
 
               <button id="back_button" class="button is-large is-info" @click="back">
