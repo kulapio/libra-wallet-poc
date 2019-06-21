@@ -7,11 +7,9 @@
             Transfer
           </h1>
 
-          <qrcode-stream @decode="onDecode"></qrcode-stream>
-
           <section>
             <b-field label="To">
-                <b-input v-model="toAddress" placeholder="receiver address"></b-input>
+                <b-input v-model="$store.state.toAddress" placeholder="receiver address"></b-input>
             </b-field>
 
             <b-field label="Amount">
@@ -46,7 +44,6 @@ import { Toast } from 'buefy'
 import router from '../router'
 import config from '../config'
 import axios from 'axios'
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 
 export default {
   name: 'Wallet',
@@ -56,7 +53,6 @@ export default {
       message: '',
       byteLength: '',
       transactionHash: '',
-      toAddress: '',
       amount: '10'
     }
   },
@@ -64,11 +60,6 @@ export default {
   },
   async created () {
 
-  },
-  components: {
-    QrcodeStream,
-    QrcodeDropZone,
-    QrcodeCapture
   },
   methods: {
     back () {
@@ -84,7 +75,7 @@ export default {
       let response = await axios.post(config.api + '/transfer', {
         fromAddress: this.$store.state.userAddress,
         mnemonic: this.$store.state.mnemonic,
-        toAddress: this.toAddress,
+        toAddress: this.$store.state.toAddress,
         amount: this.amount
       })
       console.log('response', response)

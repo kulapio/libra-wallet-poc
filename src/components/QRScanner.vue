@@ -4,17 +4,17 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="user title">
-            Scan your friend QR
+            Scan your friend's QR
           </h1>
 
           <qrcode-stream @decode="onDecode"></qrcode-stream>
 
-          <h1 class="user title">
-            {{ qrString }}
-          </h1>
-
           <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
+              <button class="button is-large is-success" @click="sendWithManualAddress">
+                Key in address yourself
+              </button>
+
               <button id="back_button" class="button is-large is-info" @click="back">
                 Back
               </button>
@@ -50,12 +50,17 @@ export default {
     QrcodeCapture
   },
   methods: {
+    sendWithManualAddress () {
+      router.push({ name: 'Send' })
+    },
     back () {
       router.push({ name: 'Wallet' })
     },
     onDecode (decodedString) {
       console.log('decodedString', decodedString)
-      this.qrString = decodedString
+      // this.qrString = decodedString
+      this.$store.state.toAddress = decodedString
+      router.push({ name: 'Send' })
     }
   }
 }

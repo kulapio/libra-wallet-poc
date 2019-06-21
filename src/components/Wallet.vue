@@ -134,7 +134,7 @@ export default {
       this.userData.save()
     },
     openSend () {
-      router.push({ name: 'Send' })
+      router.push({ name: 'ScanQR' })
     },
     openReceive () {
       router.push({ name: 'Receive' })

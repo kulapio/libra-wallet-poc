@@ -8,7 +8,8 @@ export default new Vuex.Store({
     userAddress: '',
     userAddressShort: '',
     balance: '',
-    mnemonic: ''
+    mnemonic: '',
+    toAddress: ''
   },
   mutations: {
 
