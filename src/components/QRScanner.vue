@@ -4,37 +4,23 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="user title">
-            Transfer
+            Scan your friend QR
           </h1>
 
           <qrcode-stream @decode="onDecode"></qrcode-stream>
 
-          <section>
-            <b-field label="To">
-                <b-input v-model="toAddress" placeholder="receiver address"></b-input>
-            </b-field>
+          <h1 class="user title">
+            {{ qrString }}
+          </h1>
 
-            <b-field label="Amount">
-              <b-input placeholder="amount to transfer"
-                v-model="amount"
-                type="number"
-                min="1"
-                max="10000000000000">
-              </b-input>
-            </b-field>
-          </section>
-
-           <b-field><!-- Label left empty for spacing -->
+          <b-field><!-- Label left empty for spacing -->
             <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="transfer">
-                Confirm
-              </button>
-
               <button id="back_button" class="button is-large is-info" @click="back">
                 Back
               </button>
             </p>
           </b-field>
+
         </div>
       </div>
     </section>
@@ -42,22 +28,15 @@
 </template>
 
 <script>
-import { Toast } from 'buefy'
+// import { Toast } from 'buefy'
 import router from '../router'
-import config from '../config'
-import axios from 'axios'
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 
 export default {
   name: 'Wallet',
   data () {
     return {
-      network: null,
-      message: '',
-      byteLength: '',
-      transactionHash: '',
-      toAddress: '',
-      amount: '10'
+      qrString: ''
     }
   },
   computed: {
@@ -74,24 +53,9 @@ export default {
     back () {
       router.push({ name: 'Wallet' })
     },
-    async transfer () {
-      Toast.open({
-        duration: 7000,
-        message: 'Trasnfering...',
-        position: 'is-top',
-        type: 'is-success'
-      })
-      let response = await axios.post(config.api + '/transfer', {
-        fromAddress: this.$store.state.userAddress,
-        mnemonic: this.$store.state.mnemonic,
-        toAddress: this.toAddress,
-        amount: this.amount
-      })
-      console.log('response', response)
-      router.push({ name: 'Wallet' })
-    },
     onDecode (decodedString) {
       console.log('decodedString', decodedString)
+      this.qrString = decodedString
     }
   }
 }
