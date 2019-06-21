@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="user title">
-            Scan your friend's QR
+            Scan QR Code
           </h1>
 
           <qrcode-stream @decode="onDecode"></qrcode-stream>
