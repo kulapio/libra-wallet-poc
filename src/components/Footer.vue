@@ -14,6 +14,6 @@ export default {
 
 <style scoped>
 .content {
-  margin: 20px;
+  padding: 20px;
 }
 </style>

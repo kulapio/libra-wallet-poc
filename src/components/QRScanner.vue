@@ -1,146 +1,134 @@
 <template>
   <div class="Wallet">
-    <section class="hero is-medium is-primary is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="user title">
-            Scan QR Code
-          </h1>
-
-          <qrcode-stream @decode="onDecode"></qrcode-stream>
-
-          <b-field><!-- Label left empty for spacing -->
-            <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="sendWithManualAddress">
-                Manual
-              </button>
-
-              <button id="back_button" class="button is-large is-info" @click="back">
-                Back
-              </button>
-            </p>
-          </b-field>
-
+    <section class="wallet-container hero is-medium is-primary is-bold">
+      <div class="wallet-body">
+        <div class="qr-scanner">
+          <qrcode-stream
+            @init="onInit"
+            @decode="onDecode"
+          />
+          <img
+            v-if="!loading"
+            src="@/assets/img/qr-scaner-border.png"
+          >
         </div>
+      </div>
+      <div class="button-box">
+        <b-button
+            icon-left="pencil"
+            @click="sendWithManualAddress"
+          >
+            Send Manually
+          </b-button>
+          <b-button
+            icon-left="arrow-left"
+            @click="back"
+          >
+            Back
+          </b-button>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-// import { Toast } from 'buefy'
-import router from '../router'
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+import { QrcodeStream } from 'vue-qrcode-reader'
 
 export default {
   name: 'Wallet',
+  components: {
+    QrcodeStream
+  },
   data () {
     return {
-      qrString: ''
+      qrString: '',
+      loading: false
     }
-  },
-  computed: {
-  },
-  async created () {
-
-  },
-  components: {
-    QrcodeStream,
-    QrcodeDropZone,
-    QrcodeCapture
   },
   methods: {
     sendWithManualAddress () {
-      router.push({ name: 'Send' })
+      this.$router.push({ name: 'Send' })
     },
     back () {
-      router.push({ name: 'Wallet' })
+      this.$router.push({ name: 'Wallet' })
+    },
+    async onInit (promise) {
+      this.loading = true
+      try {
+        await promise
+      } catch (error) {
+        this.$toast.open({
+          message: `QR scanner error.`,
+          type: 'is-danger'
+        })
+      } finally {
+        this.loading = false
+      }
     },
     onDecode (decodedString) {
-      console.log('decodedString', decodedString)
-      // this.qrString = decodedString
-      this.$store.state.toAddress = decodedString
-      router.push({ name: 'Send' })
+      if (decodedString.length === 64) {
+        this.$router.push({
+          name: 'Send',
+          query: {
+            to: decodedString
+          }
+        })
+      }
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.byteLength {
-  float: right;
-}
-
-.card {
-  margin-top: 25px;
-}
-.card-footer-item.share {
-  padding: 0px;
-}
-.card-footer-item.share span {
+<style lang="scss" scoped>
+.wallet-container {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  min-height: calc(100vh - 170px);
   width: 100%;
-  height: 100%;
-  padding: 12px;
-  color: #7957d5;
-  cursor: pointer;
+  margin: 0 auto;
 }
-#back_button {
-  margin-left: 60px;
+.wallet-body {
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
-
-._7zme ._7zoh {
-    height: 100%;
+.qr-scanner {
+  padding: 20px;
+  position: relative;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 300px;
+  }
+}
+.button-box {
+  padding: 0 30px;
+  button {
     width: 100%;
+    height: 60px;
+    margin-bottom: 20px;
+  }
 }
-._7zoh {
-    height: 15px;
-    width: 15px;
-}
-._7zo5 {
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-}
-._7zme {
-    display: inline-block;
-    height: 24px;
-    line-height: 20px;
-    width: 24px;
-}
-
-.user {
-  color: #ffffff6b !important;
-}
-
-#refresh {
-  margin-left: 10px;
-  /* display: none; */
-  display: inline-block;
-}
-
-#action_area {
-  margin: 50px auto 0px auto;
-  width: fit-content;
-}
-</style>
-
-<style>
-.label {
-  color: white !important;
+/* on desktop */
+@media only screen and (min-width: 1025px) {
+  .wallet-container {
+    margin: 10px auto;
+    width: 70%;
+    border-radius: 3px;
+  }
+  .button-box {
+    button {
+      width: 40%;
+      height: 60px;
+      max-width: 300px;
+    }
+    button:first-child {
+      margin-right: 15px;
+    }
+    button:last-child {
+      margin-left: 15px;
+    }
+  }
 }
 </style>

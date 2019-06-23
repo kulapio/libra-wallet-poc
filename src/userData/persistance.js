@@ -1,12 +1,12 @@
-import store from 'store'
+import lcstore from 'store'
 
 class UserDataPersistance {
   constructor () {
     // Load from local storage
-    if (store.get('userAddress') !== undefined) {
-      this.userAddress = store.get('userAddress')
-      this.balance = store.get('balance')
-      this.mnemonic = store.get('mnemonic')
+    if (lcstore.get('userAddress') !== undefined) {
+      this.userAddress = lcstore.get('userAddress')
+      this.balance = lcstore.get('balance')
+      this.mnemonic = lcstore.get('mnemonic')
     } else {
       this.userAddress = ''
       this.balance = ''
@@ -21,9 +21,14 @@ class UserDataPersistance {
   }
 
   save () {
-    store.set('userAddress', this.userAddress)
-    store.set('balance', this.balance)
-    store.set('mnemonic', this.mnemonic)
+    lcstore.set('userAddress', this.userAddress)
+    lcstore.set('balance', this.balance)
+    lcstore.set('mnemonic', this.mnemonic)
+  }
+
+  updateUserBalance (balance) {
+    this.balance = balance
+    lcstore.set('balance', this.balance)
   }
 }
 

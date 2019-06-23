@@ -28,13 +28,6 @@ export default new Router({
       path: '/scanQR',
       name: 'ScanQR',
       component: ScanQR
-    },
-    {
-      path: '/github',
-      name: 'github',
-      beforeEnter () {
-        location.href = 'https://github.com/kulapio/doctoeth'
-      }
     }
   ]
 })
