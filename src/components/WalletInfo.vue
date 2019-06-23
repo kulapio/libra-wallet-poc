@@ -68,7 +68,7 @@ export default {
       userAddress: state => state.userAddress
     }),
     shareUrl () {
-      return `https://dev.kulap.io/libra?address=${this.userAddress}`
+      return `https://dev.kulap.io/libra/#/receive?address=${this.userAddress}`
     },
     shareText () {
       return `Hi there, this's my Libra Wallet!
