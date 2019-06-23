@@ -10,6 +10,12 @@
 
 
 # Run
-
 -   npm install
 -   npm run serve
+
+
+# Contributors
+- Tot (Kulap.io, https://github.com/totiz)
+- Big (Kulap.io, https://github.com/biigpongsatorn)
+- Kor (https://github.com/korrio)
+- Bank (https://github.com/zent-bank)
