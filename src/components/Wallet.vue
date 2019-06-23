@@ -87,11 +87,6 @@ export default {
       const data = await this.createNewWallet()
       await this.updatePersistance(data.address, data.balance, data.mnemonic)
     }
-    if (this.userAddress) {
-      setInterval(() => {
-        this.queryBalance()
-      }, 5000)
-    }
   },
   computed: {
     ...mapState({
