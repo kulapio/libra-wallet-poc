@@ -1,8 +1,6 @@
 <template>
-  <div class="home">
-    <img src="../assets/logo.png" width="400">
+  <div>
     <WalletInfo/>
-    <Footer />
   </div>
 </template>
 

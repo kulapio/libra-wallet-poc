@@ -1,38 +1,41 @@
 <template>
   <div class="Wallet">
-    <section class="hero is-medium is-primary is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="user title">
-            Transfer
-          </h1>
-
-          <section>
-            <b-field label="To">
-                <b-input v-model="$store.state.toAddress" placeholder="receiver address"></b-input>
-            </b-field>
-
-            <b-field label="Amount">
-              <b-input placeholder="amount to transfer"
-                v-model="amount"
-                type="number"
-                min="1"
-                max="10000000000000">
-              </b-input>
-            </b-field>
-          </section>
-
-           <b-field><!-- Label left empty for spacing -->
-            <p id="action_area" class="control">
-              <button class="button is-large is-success" @click="transfer">
-                Confirm
-              </button>
-
-              <button id="back_button" class="button is-large is-info" @click="back">
-                Back
-              </button>
-            </p>
+    <VueElementLoading
+      :active="isTransfering"
+      spinner="bar-fade-scale"
+      color="#9b67df"
+      text="Transfering ..."
+      is-full-screen
+    />
+    <section class="wallet-container hero is-medium is-primary is-bold">
+      <div class="wallet-body">
+        <div class="input-box">
+          <b-field label="Destination Address">
+            <b-input
+              v-model="address"
+              placeholder="Destination address"
+            />
           </b-field>
+        </div>
+        <div class="input-box">
+          <b-field label="Amount">
+            <b-input
+              v-model="amount"
+              placeholder="Amount"
+              type="number"
+            />
+          </b-field>
+        </div>
+        <div class="button-box">
+          <b-button
+            type="is-success"
+            @click="transfer"
+          >
+            Confirm
+          </b-button>
+          <b-button @click="back">
+            Cancel
+          </b-button>
         </div>
       </div>
     </section>
@@ -40,129 +43,112 @@
 </template>
 
 <script>
-import { Toast } from 'buefy'
-import router from '../router'
 import config from '../config'
 import axios from 'axios'
+import { mapActions, mapState } from 'vuex'
+import VueElementLoading from 'vue-element-loading'
 
 export default {
   name: 'Wallet',
   data () {
     return {
-      network: null,
-      message: '',
-      byteLength: '',
-      transactionHash: '',
-      amount: '10'
+      address: '',
+      amount: '10',
+      isTransfering: false
+    }
+  },
+  components: {
+    VueElementLoading
+  },
+  created () {
+    if (!this.mnemonic) {
+      this.$router.push({ name: 'Wallet' })
+    }
+    if (this.$route.query && this.$route.query.to) {
+      this.address = this.$route.query.to
+      this.updateUserAddress(this.$route.query.to)
     }
   },
   computed: {
-  },
-  async created () {
-
+    ...mapState({
+      userAddress: state => state.userAddress,
+      mnemonic: state => state.mnemonic
+    })
   },
   methods: {
+    ...mapActions({
+      updateUserAddress: 'updateUserAddress'
+    }),
     back () {
-      router.push({ name: 'Wallet' })
+      this.$router.push({ name: 'Wallet' })
     },
     async transfer () {
-      Toast.open({
-        duration: 7000,
-        message: 'Trasnfering...',
-        position: 'is-top',
-        type: 'is-success'
-      })
-      let response = await axios.post(config.api + '/transfer', {
-        fromAddress: this.$store.state.userAddress,
-        mnemonic: this.$store.state.mnemonic,
-        toAddress: this.$store.state.toAddress,
+      this.isTransfering = true
+      await axios.post(config.api + '/transfer', {
+        fromAddress: this.userAddress,
+        mnemonic: this.mnemonic,
+        toAddress: this.address,
         amount: this.amount
       })
-      console.log('response', response)
-      router.push({ name: 'Wallet' })
-    },
-    onDecode (decodedString) {
-      console.log('decodedString', decodedString)
+      this.isTransfering = false
+      this.$router.push({ name: 'Wallet' })
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.byteLength {
-  float: right;
-}
-
-.card {
-  margin-top: 25px;
-}
-.card-footer-item.share {
-  padding: 0px;
-}
-.card-footer-item.share span {
-  width: 100%;
-  height: 100%;
-  padding: 12px;
-  color: #7957d5;
-  cursor: pointer;
-}
-#back_button {
-  margin-left: 60px;
-}
-
-._7zme ._7zoh {
-    height: 100%;
-    width: 100%;
-}
-._7zoh {
-    height: 15px;
-    width: 15px;
-}
-._7zo5 {
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-}
-._7zme {
-    display: inline-block;
-    height: 24px;
-    line-height: 20px;
-    width: 24px;
-}
-
-.user {
-  color: #ffffff6b !important;
-}
-
-#refresh {
-  margin-left: 10px;
-  /* display: none; */
-  display: inline-block;
-}
-
-#action_area {
-  margin: 50px auto 0px auto;
-  width: fit-content;
+<style lang="scss">
+.input-box {
+  text-align: left;
+  margin-bottom: 20px;
+  .field {
+    label {
+      color: #fff;
+    }
+  }
 }
 </style>
 
-<style>
-.label {
-  color: white !important;
+<style lang="scss" scoped>
+.wallet-container {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  min-height: calc(100vh - 170px);
+  width: 100%;
+  margin: 0 auto;
+}
+.wallet-body {
+  padding: 20px;
+}
+.button-box {
+  margin-top: 55px;
+  button {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+}
+/* on desktop */
+@media only screen and (min-width: 1025px) {
+  .wallet-container {
+    margin: 10px auto;
+    width: 70%;
+    border-radius: 3px;
+  }
+  .wallet-body {
+    padding: 50px;
+  }
+  .button-box {
+    button {
+      width: 40%;
+      height: 60px;
+      max-width: 300px;
+    }
+    button:first-child {
+      margin-right: 15px;
+    }
+    button:last-child {
+      margin-left: 15px;
+    }
+  }
 }
 </style>

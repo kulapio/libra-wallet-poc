@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.is-dots {
+  white-space: nowrap;
+  overflow:hidden !important;
+  text-overflow: ellipsis;
+}

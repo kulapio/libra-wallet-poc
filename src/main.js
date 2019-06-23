@@ -3,10 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Buefy from 'buefy'
-import 'buefy/lib/buefy.css'
 import VueLoading from 'vue-loading-template'
 import VueClipboard from 'vue-clipboard2'
 import SocialSharing from 'vue-social-sharing'
+
+import 'buefy/dist/buefy.css'
+import '@/assets/css/main.css'
 
 Vue.use(Buefy)
 Vue.use(VueLoading)
