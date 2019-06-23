@@ -29,6 +29,15 @@
         <div v-else class="balance">
           <span>Loading ...</span>
         </div>
+        <div class="refresh">
+          <a @click="refreshBalance">
+            <b-icon
+              icon="refresh"
+              size="is-small"
+            />
+            {{ isQueryBalance ? 'Refreshing ...' : 'Click to refresh' }}
+          </a>
+        </div>
         <div class="button-box">
           <b-button
             icon-left="send"
@@ -68,7 +77,8 @@ export default {
       byteLength: '',
       transactionHash: '',
       userData: null,
-      updateingBalance: false
+      updateingBalance: false,
+      isQueryBalance: false
     }
   },
   async created () {
@@ -122,6 +132,11 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    async refreshBalance () {
+      this.isQueryBalance = true
+      await this.queryBalance()
+      this.isQueryBalance = false
     },
     async queryBalance () {
       const { data } = await axios.post(config.api + '/getBalance', {address: this.userAddress})
@@ -190,6 +205,12 @@ export default {
     font-size: 40px;
     font-weight: bold;
     vertical-align: middle;
+  }
+}
+.refresh {
+  a {
+    color: #f7f7f76b;
+    font-size: 13px;
   }
 }
 .button-box {
