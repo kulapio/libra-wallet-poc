@@ -1,5 +1,7 @@
 ## Libra Wallet POC for Testnet
 
+![Libra Wallet POC](https://cdn-images-1.medium.com/max/2600/1*dSIjHHJVv9JbKwswRFXJwg.png)
+
 # Docs
 - [The First Libra Wallet POC— Building your own Wallet and APIs](https://medium.com/kulapofficial/the-first-libra-wallet-poc-building-your-own-wallet-and-apis-3cb578c0bd52?postPublishedType=repub)
 
