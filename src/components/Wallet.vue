@@ -71,7 +71,6 @@ export default {
   },
   data () {
     return {
-      eth: null,
       network: null,
       message: '',
       byteLength: '',
@@ -104,9 +103,6 @@ export default {
       balance: state => state.balance,
       mnemonic: state => state.mnemonic
     }),
-    etherscanLink () {
-      return this.getEtherscanLink()
-    },
     shortUserAddr () {
       if (!this.userAddress) return 'Loading...'
       const first = this.userAddress.substr(0, 7)
