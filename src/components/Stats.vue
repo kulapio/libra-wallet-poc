@@ -4,10 +4,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            Wallets
+            {{ Number(wallets).toLocaleString() }}
           </h1>
           <h2 class="subtitle">
-            {{ Number(wallets).toLocaleString() }}
+            Wallets
           </h2>
         </div>
       </div>
@@ -16,10 +16,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            Transactions
+            {{ Number(transactions).toLocaleString() }}
           </h1>
           <h2 class="subtitle">
-            {{ Number(transactions).toLocaleString() }}
+            Transactions
           </h2>
         </div>
       </div>
