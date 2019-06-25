@@ -135,7 +135,7 @@ export default {
       this.isQueryBalance = false
     },
     async queryBalance () {
-      const { data } = await axios.post(config.api + '/getBalance', {address: this.userAddress})
+      const { data } = await axios.post(config.api + '/getBalance', { address: this.userAddress })
       this.updateBalance(data.balance)
       this.userData.updateUserBalance(data.balance)
       return data
