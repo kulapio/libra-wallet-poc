@@ -19,3 +19,4 @@
 - Big (Kulap.io, https://github.com/biigpongsatorn)
 - Kor (https://github.com/korrio)
 - Bank (https://github.com/zent-bank)
+- Suraneti (https://github.com/suraneti)
