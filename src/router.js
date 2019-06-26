@@ -34,6 +34,11 @@ export default new Router({
       path: '/stats',
       name: 'Stats',
       component: Stats
+    },
+    {
+      path: '/blog',
+      name: 'Blog',
+      beforeEnter () { location.href = 'https://medium.com/kulapofficial/the-first-libra-wallet-poc-building-your-own-wallet-and-apis-3cb578c0bd52' }
     }
   ]
 })
