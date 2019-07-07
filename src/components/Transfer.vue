@@ -21,6 +21,7 @@
           <b-field label="Amount">
             <b-input
               v-model="amount"
+              step="0.000001"
               placeholder="Amount"
               type="number"
             />
@@ -84,14 +85,23 @@ export default {
     },
     async transfer () {
       this.isTransfering = true
-      await axios.post(config.api + '/transfer', {
-        fromAddress: this.userAddress,
-        mnemonic: this.mnemonic,
-        toAddress: this.address,
-        amount: this.amount
-      })
+      try {
+        await axios.post(config.api + '/transfer', {
+          fromAddress: this.userAddress,
+          mnemonic: this.mnemonic,
+          toAddress: this.address,
+          amount: this.amount
+        })
+        this.$router.push({ name: 'Wallet' })
+      } catch (e) {
+        console.log(e)
+        this.$toast.open({
+          type: 'is-danger',
+          duration: 5000,
+          message: 'Something went wrong.'
+        })
+      }
       this.isTransfering = false
-      this.$router.push({ name: 'Wallet' })
     }
   }
 }

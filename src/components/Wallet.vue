@@ -24,7 +24,7 @@
         </div>
         <div v-if="balance" class="balance">
           <img src="@/assets/img/libra-ic.png">
-          <span>{{ balance | numberWithComma }}</span>
+          <span>{{ balance | numberWithCommas }}</span>
         </div>
         <div v-else class="balance">
           <span>Loading ...</span>
@@ -70,13 +70,10 @@ export default {
     Avatar
   },
   filters: {
-    numberWithComma (x) {
-      x = x.toString()
-      const pattern = /(-?\d+)(\d{3})/
-      while (pattern.test(x)) {
-        x = x.replace(pattern, '$1,$2')
-      }
-      return x
+    numberWithCommas (x) {
+      let parts = x.toString().split('.')
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return parts.join('.')
     }
   },
   data () {
