@@ -51,6 +51,12 @@
           >
             Receive
           </b-button>
+          <b-button
+            icon-left="history"
+            @click="openTransaction"
+          >
+            Transaction History
+          </b-button>
         </div>
       </div>
     </div>
@@ -156,6 +162,9 @@ export default {
     },
     openReceive () {
       this.$router.push({ name: 'Receive', query: { address: this.userAddress } })
+    },
+    openTransaction () {
+      this.$router.push({ name: 'Transactions', query: { address: this.userAddress } })
     },
     async doUpdateBalance () {
       this.updateingBalance = true
