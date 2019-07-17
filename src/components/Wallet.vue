@@ -99,6 +99,20 @@ export default {
         mnemonic: this.userData.mnemonic
       })
       await this.queryBalance()
+
+      // Mint if balance = 0
+      try {
+        if (parseInt(this.balance) === 0) {
+          console.log('balance is 0')
+          await this.mint('100')
+
+          setTimeout(async () => {
+            await this.queryBalance()
+          }, 1000)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     } else { // Create a new wallet
       const data = await this.createNewWallet()
       await this.updatePersistance(data.address, data.balance, data.mnemonic)
@@ -140,6 +154,10 @@ export default {
       this.isQueryBalance = true
       await this.queryBalance()
       this.isQueryBalance = false
+    },
+    async mint (amount) {
+      const { data } = await axios.post(config.api + '/mint', { address: this.userAddress, amount: amount })
+      return data
     },
     async queryBalance () {
       const { data } = await axios.post(config.api + '/getBalance', { address: this.userAddress })
