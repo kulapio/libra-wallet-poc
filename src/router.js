@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home'
 import Send from './views/Send'
 import Receive from './views/Receive'
+import Transactions from './views/Transactions'
 import ScanQR from './views/ScanQR'
 import Stats from './views/Stats'
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/stats',
       name: 'Stats',
       component: Stats
+    },
+    {
+      path: '/transactions',
+      name: 'Transactions',
+      component: Transactions
     },
     {
       path: '/blog',
