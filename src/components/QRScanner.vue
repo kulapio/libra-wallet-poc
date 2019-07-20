@@ -66,6 +66,8 @@ export default {
       }
     },
     onDecode (decodedString) {
+      console.log('decodedString', decodedString)
+      // Libra address
       if (decodedString.length === 64) {
         this.$router.push({
           name: 'Send',
@@ -73,6 +75,21 @@ export default {
             to: decodedString
           }
         })
+      // Payment QR
+      } else if (decodedString[0] === '{') {
+        const decodedJson = JSON.parse(decodedString)
+        console.log('decodedJson', decodedJson)
+        // Peer-to-peer Payment
+        if (decodedJson.type === 'peer_to_peer_payment') {
+          this.$router.push({
+            name: 'Send',
+            query: {
+              to: decodedJson.address,
+              amount: decodedJson.amount,
+              editable: false
+            }
+          })
+        }
       }
     }
   }

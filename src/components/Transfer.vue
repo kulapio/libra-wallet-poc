@@ -11,7 +11,7 @@
       <div class="wallet-body">
         <div class="input-box">
           <b-field label="Destination Address">
-            <b-input
+            <b-input :disabled="!editable"
               v-model="address"
               placeholder="Destination address"
             />
@@ -19,7 +19,7 @@
         </div>
         <div class="input-box">
           <b-field label="Amount">
-            <b-input
+            <b-input :disabled="!editable"
               v-model="amount"
               step="0.000001"
               placeholder="Amount"
@@ -55,6 +55,7 @@ export default {
     return {
       address: '',
       amount: '10',
+      editable: true,
       isTransfering: false
     }
   },
@@ -65,9 +66,17 @@ export default {
     if (!this.mnemonic) {
       this.$router.push({ name: 'Wallet' })
     }
-    if (this.$route.query && this.$route.query.to) {
-      this.address = this.$route.query.to
-      this.updateUserAddress(this.$route.query.to)
+    if (this.$route.query) {
+      if (this.$route.query.to) {
+        this.address = this.$route.query.to
+        this.updateUserAddress(this.$route.query.to)
+      }
+      if (this.$route.query.amount) {
+        this.amount = this.$route.query.amount
+      }
+      if (this.$route.query.editable !== undefined) {
+        this.editable = this.$route.query.editable
+      }
     }
   },
   computed: {
