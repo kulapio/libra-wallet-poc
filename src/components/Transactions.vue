@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import config from "@/config.json";
-import axios from "axios";
+import { mapActions, mapState } from 'vuex'
+import config from '@/config.json'
+import axios from 'axios'
 
 export default {
-  name: "Wallet",
-  data() {
+  name: 'Wallet',
+  data () {
     return {
       transactions: [],
       fetched: false,
@@ -70,49 +70,49 @@ export default {
         width: 0,
         height: 0
       }
-    };
+    }
   },
   computed: {
     ...mapState({
       userAddress: state => state.userAddress
-    }),
+    })
   },
-  async created() {
+  async created () {
     if (this.userAddress) {
-      this.getTransactions();
+      this.getTransactions()
     }
 
     window.addEventListener('resize', this.handleResize)
-    this.handleResize();
+    this.handleResize()
   },
-  destroyed() {
+  destroyed () {
     window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     ...mapActions({
-      updateUserAddress: "updateUserAddress"
+      updateUserAddress: 'updateUserAddress'
     }),
-    async getTransactions() {
+    async getTransactions () {
       try {
-        const payload = { address: this.userAddress };
-        const { data } = await axios.post(config.api + '/transactionHistory', payload);
+        const payload = { address: this.userAddress }
+        const { data } = await axios.post(config.api + '/transactionHistory', payload)
 
-        console.log(data);
-        this.transactions = data.transactions;
-        this.fetched = true;
+        console.log(data)
+        this.transactions = data.transactions
+        this.fetched = true
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
-    back() {
-      this.$router.push({ name: "Wallet" });
+    back () {
+      this.$router.push({ name: 'Wallet' })
     },
-    handleResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+    handleResize () {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
