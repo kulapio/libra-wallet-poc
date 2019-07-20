@@ -22,10 +22,10 @@
               </div>
             </div>
             <div class="transactions-body">
-              <div v-bind:style= "[transaction.event === 'received' ? {'color': '#55C81F'} : { 'color': '#483DB1' }]">
+              <div v-bind:style= "[transaction.event === 'sent' ? {'color': '#483DB1'} : { 'color': '#55C81F' }]">
                 {{ transaction.event.toUpperCase() }}
               </div>
-              <div v-bind:style= "[transaction.event === 'received' ? {'color': '#55C81F'} : { 'color': '#483DB1' }]">
+              <div v-bind:style= "[transaction.event === 'sent' ? {'color': '#483DB1'} : { 'color': '#55C81F' }]">
                 {{ Number(transaction.amount).toLocaleString() }} Coins
               </div>
             </div>
