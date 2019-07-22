@@ -34,7 +34,7 @@
                 {{ transaction.event === 'sent' ? 'To address:' : 'From address:' }}
               </div>
               <div>
-                {{ transaction.event === 'sent' ? transaction.toAddress.substring(0, 30) : transaction.fromAddress.substring(0, 30) }}...
+                {{ transaction.event === 'sent' ? shortAddress(transaction.toAddress) : shortAddress(transaction.fromAddress) }}
               </div>
             </div>
             <div v-if="window.width >= 600" class="transactions-footer">
@@ -110,6 +110,11 @@ export default {
     handleResize () {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight
+    },
+    shortAddress (address) {
+      const first = address.substr(0, 7)
+      const last = address.substr(address.length - 7, address.length)
+      return `${first}...${last}`
     }
   }
 }
@@ -186,7 +191,7 @@ export default {
 }
 
 .content {
-  max-height: calc(100vh - 450px);
+  // max-height: calc(100vh - 450px);
   overflow: auto;
 
   .align-center {
