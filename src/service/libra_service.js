@@ -29,7 +29,12 @@ class Libra {
   }
 
   async transfer (mnemonic, toAddress, amount) {
-    const client = new LibraClient({ network: LibraNetwork.Testnet })
+    const client = new LibraClient({
+      transferProtocol: 'https',
+      host: 'ac-libra-testnet.kulap.io',
+      port: '443',
+      dataProtocol: 'grpc-web-text'
+    })
     const wallet = new LibraWallet({ mnemonic: mnemonic })
     const account = wallet.generateAccount(0)
     const amountToTransfer = BigNumber(amount).times(1e6)
