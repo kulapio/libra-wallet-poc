@@ -69,6 +69,8 @@ import axios from 'axios'
 import UserDataPersistance from '@/userData/persistance'
 import Avatar from '@/components/Avatar.vue'
 import { mapActions, mapState } from 'vuex'
+import LibraService from '@/service/libra_service'
+import recordStat from '@/service/record_stat'
 
 export default {
   name: 'Wallet',
@@ -90,13 +92,15 @@ export default {
       transactionHash: '',
       userData: null,
       updateingBalance: false,
-      isQueryBalance: false
+      isQueryBalance: false,
+      libra: new LibraService()
     }
   },
   async created () {
     // Load from local storage
     this.userData = new UserDataPersistance()
-    // Already exist
+
+    // User already have a wallet
     if (this.userData.userAddress) {
       this.updateUserData({
         userAddress: this.userData.userAddress,
@@ -110,7 +114,7 @@ export default {
       try {
         if (parseInt(this.balance) === 0) {
           console.log('balance is 0')
-          await this.mint('100')
+          await this.mint('100', this.userAddress)
 
           setTimeout(async () => {
             await this.queryBalance()
@@ -119,7 +123,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    } else { // Create a new wallet
+    // Creating a new wallet
+    } else {
       const data = await this.createNewWallet()
       await this.updatePersistance(data.address, data.balance, data.mnemonic)
     }
@@ -128,7 +133,8 @@ export default {
     ...mapState({
       userAddress: state => state.userAddress,
       balance: state => state.balance,
-      mnemonic: state => state.mnemonic
+      mnemonic: state => state.mnemonic,
+      AMOUNT_TO_MINT: state => state.AMOUNT_TO_MINT
     }),
     shortUserAddr () {
       if (!this.userAddress) return 'Loading...'
@@ -144,14 +150,35 @@ export default {
     }),
     async createNewWallet () {
       try {
-        const { data } = await axios.post(config.api + '/createWallet')
+        // Record stat
+        recordStat(['transactions', 'wallets'])
+
+        // Create wallet
+        const createdResult = await this.libra.createWallet()
+        console.log('createdResult', createdResult)
+
+        // Minting coins
+        const { data } = await this.mint(this.AMOUNT_TO_MINT, createdResult.address)
+        console.log(data)
+
         this.updateUserData({
-          userAddress: data.address,
-          userAddressShort: data.address.substring(0, 5),
-          balance: data.balance,
-          mnemonic: data.mnemonic
+          userAddress: createdResult.address,
+          userAddressShort: createdResult.address.substring(0, 5),
+          balance: '0',
+          mnemonic: createdResult.mnemonic + ';1'
         })
-        return data
+
+        // Refresh balance, sometime faucet is slow
+        setTimeout(async () => {
+          await this.queryBalance()
+        }, 1000)
+
+        const wallet = {
+          address: createdResult.address,
+          mnemonic: createdResult.mnemonic + ';1',
+          balance: this.AMOUNT_TO_MINT.toString(10)
+        }
+        return wallet
       } catch (error) {
         console.log(error)
       }
@@ -161,8 +188,8 @@ export default {
       await this.queryBalance()
       this.isQueryBalance = false
     },
-    async mint (amount) {
-      const { data } = await axios.post(config.api + '/mint', { address: this.userAddress, amount: amount })
+    async mint (amount, address) {
+      const { data } = await axios.post(config.api + '/mint', { address: address, amount: amount })
       return data
     },
     async queryBalance () {

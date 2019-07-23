@@ -86,7 +86,9 @@ export default {
             query: {
               to: decodedJson.address,
               amount: decodedJson.amount,
-              editable: false
+              editable: false,
+              labelHead: 'Pay to',
+              labelValue: decodedJson.merchant
             }
           })
         }
