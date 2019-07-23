@@ -44,10 +44,9 @@
 </template>
 
 <script>
-import config from '../config'
-import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 import VueElementLoading from 'vue-element-loading'
+import LibraService from '@/service/libra_service'
 
 export default {
   name: 'Wallet',
@@ -56,7 +55,8 @@ export default {
       address: '',
       amount: '10',
       editable: true,
-      isTransfering: false
+      isTransfering: false,
+      libra: new LibraService()
     }
   },
   components: {
@@ -95,12 +95,9 @@ export default {
     async transfer () {
       this.isTransfering = true
       try {
-        await axios.post(config.api + '/transfer', {
-          fromAddress: this.userAddress,
-          mnemonic: this.mnemonic,
-          toAddress: this.address,
-          amount: this.amount
-        })
+        const mnemonic = this.mnemonic.split(';')[0]
+        const toAddress = this.address
+        await this.libra.transfer(mnemonic, toAddress, this.amount)
         this.$router.push({ name: 'Wallet' })
       } catch (e) {
         console.log(e)
