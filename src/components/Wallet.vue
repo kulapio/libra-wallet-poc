@@ -70,6 +70,7 @@ import UserDataPersistance from '@/userData/persistance'
 import Avatar from '@/components/Avatar.vue'
 import { mapActions, mapState } from 'vuex'
 import LibraService from '@/service/libra_service'
+import recordStat from '@/service/record_stat'
 
 export default {
   name: 'Wallet',
@@ -149,6 +150,9 @@ export default {
     }),
     async createNewWallet () {
       try {
+        // Record stat
+        recordStat(['transactions', 'wallets'])
+
         // Create wallet
         const createdResult = await this.libra.createWallet()
         console.log('createdResult', createdResult)

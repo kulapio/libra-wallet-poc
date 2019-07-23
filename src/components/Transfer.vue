@@ -47,6 +47,7 @@
 import { mapActions, mapState } from 'vuex'
 import VueElementLoading from 'vue-element-loading'
 import LibraService from '@/service/libra_service'
+import recordStat from '@/service/record_stat'
 
 export default {
   name: 'Wallet',
@@ -93,6 +94,9 @@ export default {
       this.$router.push({ name: 'Wallet' })
     },
     async transfer () {
+      // Record stat
+      recordStat(['transactions', 'transfers'])
+
       this.isTransfering = true
       try {
         const mnemonic = this.mnemonic.split(';')[0]
