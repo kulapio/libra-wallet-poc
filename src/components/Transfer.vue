@@ -9,7 +9,15 @@
     />
     <section class="wallet-container hero is-medium is-primary is-bold">
       <div class="wallet-body">
-        <div class="input-box">
+        <div v-if="labelHead !== ''" class="input-box">
+          <b-field :label="labelHead">
+            <b-input :disabled="!editable"
+              v-model="labelValue"
+              placeholder="Destination address"
+            />
+          </b-field>
+        </div>
+        <div v-else class="input-box">
           <b-field label="Destination Address">
             <b-input :disabled="!editable"
               v-model="address"
@@ -55,6 +63,8 @@ export default {
     return {
       address: '',
       amount: '10',
+      labelHead: '',
+      labelValue: '',
       editable: true,
       isTransfering: false,
       libra: new LibraService()
@@ -77,6 +87,12 @@ export default {
       }
       if (this.$route.query.editable !== undefined) {
         this.editable = this.$route.query.editable
+      }
+      if (this.$route.query.labelHead !== undefined) {
+        this.labelHead = this.$route.query.labelHead
+      }
+      if (this.$route.query.labelValue !== undefined) {
+        this.labelValue = this.$route.query.labelValue
       }
     }
   },
@@ -126,6 +142,14 @@ export default {
       color: #fff;
     }
   }
+}
+</style>
+
+<style>
+.input[disabled] {
+  color: #1f1f1f !important;
+  background-color:white !important;
+  opacity: 0.9;
 }
 </style>
 
