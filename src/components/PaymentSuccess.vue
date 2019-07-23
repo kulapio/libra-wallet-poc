@@ -1,6 +1,5 @@
 <template>
   <div class="wallet-container">
-    Payment success
     <div class="card">
       <div class="logo">
         <img src="@/assets/img/class-cafe/8-class-cafe-03.png"
@@ -9,7 +8,7 @@
           class="-Class-Cafe_03">
       </div>
       <div class="receipt">
-        <span class="receipt_label">Receipt ID : </span><span class="receipt_value">0012345</span>
+        <span class="receipt_label">Receipt ID : </span><span class="receipt_value">{{ receiptId }}</span>
       </div>
       <div class="payment_success">
         <img src="@/assets/img/check-circle-outline.svg" class="check-circle-outline" />
@@ -36,7 +35,7 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Wallet',
@@ -45,7 +44,10 @@ export default {
   },
   data () {
     return {
-      amount: '120.12'
+      address: '',
+      amount: '0',
+      receiptId: '',
+      merchant: ''
     }
   },
   filters: {
@@ -58,53 +60,27 @@ export default {
   computed: {
     ...mapState({
       userAddress: state => state.userAddress
-    }),
-    shareUrl () {
-      return `https://dev.kulap.io/libra/#/receive?address=${this.userAddress}`
-    },
-    shareText () {
-      return `Hi there, this's my Libra Wallet!
-      Please send Libra coin to me at address :
-      ${this.userAddress}`
-    }
+    })
   },
   created () {
-    if (this.$route.query && this.$route.query.address) {
-      this.updateUserAddress(this.$route.query.address)
-    } else if (this.userAddress) {
-      this.updateUserAddress(this.userAddress)
-    } else {
-      this.$router.push({ name: 'Wallet' })
+    if (this.$route.query) {
+      if (this.$route.query.address !== undefined) {
+        this.address = this.$route.query.address
+      }
+      if (this.$route.query.amount !== undefined) {
+        this.amount = this.$route.query.amount
+      }
+      if (this.$route.query.receiptId !== undefined) {
+        this.receiptId = this.$route.query.receiptId
+      }
+      if (this.$route.query.merchant !== undefined) {
+        this.merchant = this.$route.query.merchant
+      }
     }
   },
   methods: {
-    ...mapActions({
-      updateUserAddress: 'updateUserAddress'
-    }),
     back () {
       this.$router.push({ name: 'Wallet' })
-    },
-    copyAddress () {
-      this.copyText(this.userAddress)
-    },
-    copyText (text) {
-      this.$copyText(text).then((e) => {
-        this.$toast.open({
-          message: 'Copied!',
-          position: 'is-bottom',
-          type: 'is-success'
-        })
-      }, (e) => {
-        this.$toast.open({
-          duration: 5000,
-          message: 'Can\'t copy',
-          position: 'is-bottom',
-          type: 'is-danger'
-        })
-      })
-    },
-    copyPublicLink () {
-      this.copyText(this.shareUrl)
     }
   }
 }
@@ -186,7 +162,6 @@ export default {
   margin-top: 40px;
 }
 .amount_value {
-  width: 138px;
   height: 48px;
   font-family: Avenir;
   font-size: 35px;
@@ -199,6 +174,7 @@ export default {
   display: inline-block;
   vertical-align: top;
   padding-top: 3px;
+  margin-left: 8px;
 }
 .wallet-container {
   min-height: calc(100vh - 230px);

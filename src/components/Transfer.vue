@@ -118,7 +118,23 @@ export default {
         const mnemonic = this.mnemonic.split(';')[0]
         const toAddress = this.address
         await this.libra.transfer(mnemonic, toAddress, this.amount)
-        this.$router.push({ name: 'Wallet' })
+        // For peer to peer transfer
+        if (this.labelHead === '') {
+          this.$router.push({ name: 'Wallet' })
+
+        // For payment
+        } else {
+          this.$router.push({ name: 'PaymentSuccess' })
+          this.$router.push({
+            name: 'PaymentSuccess',
+            query: {
+              address: this.address,
+              amount: this.amount,
+              receiptId: this.address.substr(0, 7),
+              merchant: this.labelValue
+            }
+          })
+        }
       } catch (e) {
         console.log(e)
         this.$toast.open({
