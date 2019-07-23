@@ -6,6 +6,7 @@ import Receive from './views/Receive'
 import Transactions from './views/Transactions'
 import ScanQR from './views/ScanQR'
 import Stats from './views/Stats'
+import PaymentSuccess from './views/PaymentSuccess'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/transactions',
       name: 'Transactions',
       component: Transactions
+    },
+    {
+      path: '/paymentSuccess',
+      name: 'PaymentSuccess',
+      component: PaymentSuccess
     },
     {
       path: '/blog',
