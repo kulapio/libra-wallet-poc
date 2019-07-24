@@ -1,17 +1,27 @@
 const BigNumber = require('bignumber.js')
-const { LibraClient, LibraNetwork, LibraWallet, LibraAdmissionControlStatus } = require('kulap-libra')
+const { LibraClient, LibraWallet, LibraAdmissionControlStatus } = require('kulap-libra')
 const axios = require('axios')
 const moment = require('moment')
 
 class Libra {
+  libraClient () {
+    return new LibraClient({
+      transferProtocol: 'https',
+      host: 'ac-libra-testnet.kulap.io',
+      port: '443',
+      dataProtocol: 'grpc-web-text'
+    })
+  }
+
   async queryBalance (address) {
-    const client = new LibraClient({ network: LibraNetwork.Testnet })
+    const client = this.libraClient()
 
     const accountState = await client.getAccountState(address)
 
     // balance in micro libras
     const balanceInMicroLibras = BigNumber(accountState.balance.toString(10))
 
+    // balance in base unit
     const balace = balanceInMicroLibras.dividedBy(BigNumber(1e6))
 
     return balace.toString(10)
@@ -29,15 +39,10 @@ class Libra {
   }
 
   async transfer (mnemonic, toAddress, amount) {
-    const client = new LibraClient({
-      transferProtocol: 'https',
-      host: 'ac-libra-testnet.kulap.io',
-      port: '443',
-      dataProtocol: 'grpc-web-text'
-    })
-    const wallet = new LibraWallet({ mnemonic: mnemonic })
-    const account = wallet.generateAccount(0)
-    const amountToTransfer = BigNumber(amount).times(1e6)
+    const client = this.libraClient()
+    const wallet = new LibraWallet({ mnemonic: mnemonic }) // Load wallet from mnemonic phrase BIP39
+    const account = wallet.generateAccount(0) // Derivation paths to "LIBRA WALLET: derived key$0"
+    const amountToTransfer = BigNumber(amount).times(1e6) // Amount in micro libras
 
     // Stamp account state before transfering
     const beforeAccountState = await client.getAccountState(account.getAddress())
@@ -64,7 +69,7 @@ class Libra {
   }
 
   async mint (address, amount) {
-    const client = new LibraClient({ network: LibraNetwork.Testnet })
+    const client = this.libraClient()
 
     // Mint 100 Libra coins
     const result = await client.mintWithFaucetService(address, BigNumber(amount).times(1e6).toString(10))
@@ -139,7 +144,7 @@ class Libra {
   }
 
   async accountState (address) {
-    const client = new LibraClient({ network: LibraNetwork.Testnet })
+    const client = this.libraClient()
 
     const accountState = await client.getAccountState(address)
 
