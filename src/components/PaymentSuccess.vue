@@ -26,7 +26,7 @@
           type="is-primary"
           @click="back"
         >
-          Close
+          OK
         </b-button>
       </div>
     </div>
