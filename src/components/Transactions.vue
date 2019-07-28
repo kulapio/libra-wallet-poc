@@ -59,6 +59,7 @@
 import { mapActions, mapState } from 'vuex'
 import config from '@/config.json'
 import axios from 'axios'
+import UserDataPersistance from '@/userData/persistance'
 
 export default {
   name: 'Wallet',
@@ -78,9 +79,11 @@ export default {
     })
   },
   async created () {
-    if (this.userAddress) {
-      this.getTransactions()
+    if (!this.userAddress) {
+      this.userData = new UserDataPersistance()
     }
+
+    this.getTransactions()
 
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -94,7 +97,8 @@ export default {
     }),
     async getTransactions () {
       try {
-        const payload = { address: this.userAddress }
+        const payload = { address: this.userAddress || this.userData.userAddress }
+
         const { data } = await axios.post(config.api + '/transactionHistory', payload)
 
         console.log(data)
