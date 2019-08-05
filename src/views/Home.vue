@@ -2,7 +2,7 @@
   <div>
     <Wallet/>
     <div id="comp-jy5zp152inlineContent-gridContainer">
-      <img id="comp-jy5zsjvkimgimage" style="object-position: 50% 50%; width: 30px; height: 30px; object-fit: cover;" alt="libracamp_mini_2x.png" data-type="image" itemprop="image" src="https://static.wixstatic.com/media/8caecf_8aebe5dd6d3e480cb054ade9d1b37502~mv2.png/v1/fill/w_60,h_60,al_c,lg_1,q_80/libracamp_mini_2x.webp">
+      <img id="comp-jy5zsjvkimgimage" style="object-position: 50% 50%; width: 30px; height: 30px; object-fit: cover;" alt="libracamp_mini_2x.png" data-type="image" itemprop="image" src="@/assets/img/libra-camp/libracamp_mini_2x.webp">
       <span style="font-size:24px;vertical-align:super;margin-left:10px;">A Libracamp grant plan project.</span>
     </div>
   </div>
