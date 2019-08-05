@@ -7,6 +7,7 @@ import Transactions from './views/Transactions'
 import ScanQR from './views/ScanQR'
 import Stats from './views/Stats'
 import PaymentSuccess from './views/PaymentSuccess'
+import About from './views/About'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/paymentSuccess',
       name: 'PaymentSuccess',
       component: PaymentSuccess
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
     },
     {
       path: '/blog',
