@@ -226,7 +226,7 @@ export default {
 <style lang="scss" scoped>
 .wallet-container {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  min-height: calc(100vh - 170px);
+  // min-height: calc(100vh - 170px);
   width: 100%;
   margin: 0 auto;
 }
