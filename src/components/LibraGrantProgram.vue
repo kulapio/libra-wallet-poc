@@ -8,14 +8,14 @@
               <div class="mc1inlineContent" style="width:100%;position:relative;top:0;bottom:0" id="comp-jy6084xpinlineContent">
                 <div id="comp-jy6084xpinlineContent-gridWrapper" data-mesh-internal="true">
                   <div id="comp-jy6084xpinlineContent-gridContainer" data-mesh-internal="true">
-                    <div style="width: 340px; height: 72px;" title="" data-is-responsive="false" data-display-mode="fill" data-content-padding-horizontal="0" data-content-padding-vertical="0" data-exact-height="72" class="ca1" id="comp-jy67342h">
+                    <div style="width: 340px; height: 72px;" v-bind:style= "[window.width > 600 ? {'left': '0'} : {'left': '20px'}]"  title="" data-is-responsive="false" data-display-mode="fill" data-content-padding-horizontal="0" data-content-padding-vertical="0" data-exact-height="72" class="ca1" id="comp-jy67342h">
                       <div style="width: 340px; height: 72px;" id="comp-jy67342hlink" class="ca1link">
                         <div style="width: 340px; height: 72px; position: relative; top: 0px; left: 0px;" data-has-bg-scroll-effect="" data-style="" data-image-info="{&quot;imageData&quot;:{&quot;type&quot;:&quot;Image&quot;,&quot;id&quot;:&quot;dataItem-jy67346y&quot;,&quot;metaData&quot;:{&quot;pageId&quot;:&quot;mainPage&quot;,&quot;isPreset&quot;:false,&quot;schemaVersion&quot;:&quot;2.0&quot;,&quot;isHidden&quot;:false},&quot;title&quot;:&quot;&quot;,&quot;uri&quot;:&quot;8caecf_fef9994faa4846dd98306be083510876~mv2.png&quot;,&quot;description&quot;:&quot;&quot;,&quot;width&quot;:685,&quot;height&quot;:145,&quot;alt&quot;:&quot;libracamp logo_2x.png&quot;,&quot;name&quot;:&quot;libracamp logo_2x.png&quot;},&quot;displayMode&quot;:&quot;fill&quot;}" class="ca1img" id="comp-jy67342himg">
                           <img id="comp-jy67342himgimage" style="object-position: 50% 50%; width: 340px; height: 72px; object-fit: cover;" alt="libracamp logo_2x.png" data-type="image" itemprop="image" src="@/assets/img/libra-camp/libracamp logo_2x.png">
                         </div>
                       </div>
                     </div>
-                    <div data-packed="true" style="width: 498px; " class="txtNew" id="comp-jy675381">
+                    <div data-packed="true" v-bind:style= "[window.width > 600 ? {'width': '498px', 'padding': '10px 0 10px 0'} : { width: '100vw', 'padding': '15px 30px 10px 30px' }]" id="comp-jy675381">
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#3E2C8F;">
                           <span style="font-weight:bold;">
@@ -26,7 +26,7 @@
                         </span>
                       </h1>
                     </div>
-                    <div data-packed="true" style="width: 498px; " class="txtNew" id="comp-jy67613u">
+                    <div data-packed="true" v-bind:style= "[window.width > 600 ? {'width': '498px', 'padding': '15px 0 30px 0'} : { width: '100vw', 'padding': '15px 30px 0 30px' }]" id="comp-jy67613u">
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#464646;">
                           <span style="font-size:18px;">
@@ -78,7 +78,28 @@
 <script>
 
 export default {
-  name: 'LibraGrantProgram'
+  name: 'LibraGrantProgram',
+  data () {
+    return {
+      window: {
+        width: 0,
+        height: 0
+      }
+    }
+  },
+  async created () {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize () {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
+    }
+  }
 }
 </script>
 
@@ -86,7 +107,7 @@ export default {
 #comp-jy67342h {
     position: relative;
     margin: 40px 0px 20px 0;
-    left: 20px;
+    /* left: 20px; */
     grid-area: 1 / 1 / 2 / 2;
     justify-self: start;
     align-self: start;
@@ -99,6 +120,9 @@ export default {
   text-align: left;
 }
 .txtNew {
-  margin: 30px;
+  padding: 10px 30px 15px 30px;
+}
+.description-container {
+  padding: 15px 30px 30px 30px;
 }
 </style>
