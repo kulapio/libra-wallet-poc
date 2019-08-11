@@ -1,5 +1,7 @@
 # Libra Wallet POC for Testnet
 
+[![Build Status](https://travis-ci.org/suraneti/libra-wallet-poc.svg?branch=master)](https://travis-ci.org/suraneti/libra-wallet-poc)
+
 ![Libra Wallet POC](https://cdn-images-1.medium.com/max/2600/1*dSIjHHJVv9JbKwswRFXJwg.png)
 
 Live
