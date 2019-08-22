@@ -19,8 +19,17 @@
           :seed="userAddress"
           :size="20"
         />
-        <div class="wallet-address is-dots">
+        <div class="wallet-address is-dots" >
           Wallet: {{ shortUserAddr }}
+        </div>
+        <div class="copy-clipboard">
+          <a v-clipboard:copy="userAddress" v-clipboard:success="onCopy">
+            <b-icon
+              icon="content-copy"
+              size="is-small"
+            />
+            Copy to clipboard
+          </a>
         </div>
         <div v-if="balance" class="balance">
           <img src="@/assets/img/libra-ic.png">
@@ -218,6 +227,14 @@ export default {
       if (response) {
         this.updateingBalance = false
       }
+    },
+    onCopy(event) {
+      this.$notify({
+        group: 'copy-clipboard',
+        type: 'success',
+        title: 'Libra Wallet POC | Notification',
+        text: `Copy to clipboard successful!`
+      })
     }
   }
 }
@@ -265,6 +282,12 @@ export default {
   }
 }
 .refresh {
+  a {
+    color: #f7f7f76b;
+    font-size: 13px;
+  }
+}
+.copy-clipboard {
   a {
     color: #f7f7f76b;
     font-size: 13px;

@@ -14,6 +14,7 @@
     </router-link>
     <router-view/>
     <Footer/>
+    <notifications group="copy-clipboard" width="100%" />
   </div>
 </template>
 
@@ -49,5 +50,8 @@ export default {
 .header-image {
   height: 70px;
   cursor: pointer;
+}
+.notifications {
+  width: 100vw;
 }
 </style>
