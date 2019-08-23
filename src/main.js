@@ -6,7 +6,6 @@ import Buefy from 'buefy'
 import VueLoading from 'vue-loading-template'
 import VueClipboard from 'vue-clipboard2'
 import SocialSharing from 'vue-social-sharing'
-import Notifications from 'vue-notification'
 
 import 'buefy/dist/buefy.css'
 import '@/assets/css/main.css'
@@ -16,7 +15,6 @@ Vue.use(VueLoading)
 VueClipboard.config.autoSetContainer = true // add this line
 Vue.use(VueClipboard)
 Vue.use(SocialSharing)
-Vue.use(Notifications)
 
 Vue.config.productionTip = false
 
