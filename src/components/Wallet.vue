@@ -2,7 +2,7 @@
   <section class="wallet-container hero is-medium is-primary is-bold">
     <div class="wallet-body">
       <div
-        v-if="!this.userAddress"
+        v-if="!userAddress"
         class="creating-wallet"
       >
         <span>
@@ -73,13 +73,14 @@
 </template>
 
 <script>
-import config from '@/config.json'
-import axios from 'axios'
-import UserDataPersistance from '@/userData/persistance'
-import Avatar from '@/components/Avatar.vue'
 import { mapActions, mapState } from 'vuex'
-import LibraService from '@/service/libra_service'
+import axios from 'axios'
+
+import config from '@/config.json'
 import recordStat from '@/service/record_stat'
+import Avatar from '@/components/Avatar.vue'
+import LibraService from '@/service/libra_service'
+import UserDataPersistance from '@/userData/persistance'
 
 export default {
   name: 'Wallet',
@@ -228,7 +229,7 @@ export default {
         this.updateingBalance = false
       }
     },
-    onCopy() {
+    onCopy () {
       this.$copyText(this.userAddress).then((e) => {
         this.$toast.open({
           message: 'Copied!',
