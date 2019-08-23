@@ -19,17 +19,15 @@
           :seed="userAddress"
           :size="20"
         />
-        <div class="wallet-address is-dots" >
-          Wallet: {{ shortUserAddr }}
-        </div>
-        <div class="copy-clipboard">
-          <a @click="onCopy">
+        <div class="wallet-address is-dots">
+          <div class="wallet-content" @click="onCopy">
+            Wallet: {{ shortUserAddr }}
             <b-icon
+              style="margin-left: 5px;"
               icon="content-copy"
               size="is-small"
             />
-            Copy to clipboard
-          </a>
+          </div>
         </div>
         <div v-if="balance" class="balance">
           <img src="@/assets/img/libra-ic.png">
@@ -271,9 +269,9 @@ export default {
   }
 }
 .wallet-address {
-  width: 100%;
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
-  text-align: center;
   color: #f7f7f76b;
 }
 .balance {
@@ -335,6 +333,10 @@ export default {
     button:last-child {
       margin-left: 15px;
     }
+  }
+  .wallet-content {
+    margin-left: 5px;
+    cursor: pointer;
   }
 }
 </style>
