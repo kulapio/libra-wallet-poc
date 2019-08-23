@@ -23,7 +23,7 @@
           Wallet: {{ shortUserAddr }}
         </div>
         <div class="copy-clipboard">
-          <a v-clipboard:copy="userAddress" v-clipboard:success="onCopy">
+          <a @click="onCopy">
             <b-icon
               icon="content-copy"
               size="is-small"
@@ -228,12 +228,20 @@ export default {
         this.updateingBalance = false
       }
     },
-    onCopy(event) {
-      this.$notify({
-        group: 'copy-clipboard',
-        type: 'success',
-        title: 'Libra Wallet POC | Notification',
-        text: `Copy to clipboard successful!`
+    onCopy() {
+      this.$copyText(this.userAddress).then((e) => {
+        this.$toast.open({
+          message: 'Copied!',
+          position: 'is-bottom',
+          type: 'is-success'
+        })
+      }, (e) => {
+        this.$toast.open({
+          duration: 5000,
+          message: 'Can\'t copy',
+          position: 'is-bottom',
+          type: 'is-danger'
+        })
       })
     }
   }
