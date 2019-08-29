@@ -10,7 +10,7 @@
                   <div id="comp-jy6084xpinlineContent-gridContainer" data-mesh-internal="true">
                     <div style="width: auto; height: auto;" v-bind:style="[window.width > 600 ? {'left': '0'} : {'left': '20px'}]"  title="" data-is-responsive="false" data-display-mode="fill" data-content-padding-horizontal="0" data-content-padding-vertical="0" data-exact-height="72" class="ca1" id="comp-jy67342h">
                       <div style="width: auto; height: auto;" id="comp-jy67342hlink" class="ca1link">
-                        <div v-bind:style="[window.width > 600 ? {'width': '340px', 'height': '72px'} : {'width': 'auto', 'height': 'auto'}]" style="position: relative; top: 0px; left: 0px;" data-has-bg-scroll-effect="" data-style="" data-image-info="{&quot;imageData&quot;:{&quot;type&quot;:&quot;Image&quot;,&quot;id&quot;:&quot;dataItem-jy67346y&quot;,&quot;metaData&quot;:{&quot;pageId&quot;:&quot;mainPage&quot;,&quot;isPreset&quot;:false,&quot;schemaVersion&quot;:&quot;2.0&quot;,&quot;isHidden&quot;:false},&quot;title&quot;:&quot;&quot;,&quot;uri&quot;:&quot;8caecf_fef9994faa4846dd98306be083510876~mv2.png&quot;,&quot;description&quot;:&quot;&quot;,&quot;width&quot;:685,&quot;height&quot;:145,&quot;alt&quot;:&quot;libracamp logo_2x.png&quot;,&quot;name&quot;:&quot;libracamp logo_2x.png&quot;},&quot;displayMode&quot;:&quot;fill&quot;}" class="ca1img" id="comp-jy67342himg">
+                        <div style="position: relative; top: 0px; left: 0px; width: auto; height: auto;" data-has-bg-scroll-effect="" data-style="" data-image-info="{&quot;imageData&quot;:{&quot;type&quot;:&quot;Image&quot;,&quot;id&quot;:&quot;dataItem-jy67346y&quot;,&quot;metaData&quot;:{&quot;pageId&quot;:&quot;mainPage&quot;,&quot;isPreset&quot;:false,&quot;schemaVersion&quot;:&quot;2.0&quot;,&quot;isHidden&quot;:false},&quot;title&quot;:&quot;&quot;,&quot;uri&quot;:&quot;8caecf_fef9994faa4846dd98306be083510876~mv2.png&quot;,&quot;description&quot;:&quot;&quot;,&quot;width&quot;:685,&quot;height&quot;:145,&quot;alt&quot;:&quot;libracamp logo_2x.png&quot;,&quot;name&quot;:&quot;libracamp logo_2x.png&quot;},&quot;displayMode&quot;:&quot;fill&quot;}" class="ca1img" id="comp-jy67342himg">
                           <img id="comp-jy67342himgimage"  v-bind:style="[window.width > 600 ? {'width': '340px', 'height': '72px'} : {'width': 'calc(100vw - 10%)', 'height': 'auto'}]" style="object-position: 50% 50%; object-fit: cover;" alt="libracamp logo_2x.png" data-type="image" itemprop="image" src="@/assets/img/libra-camp/libracamp logo_2x.png">
                         </div>
                       </div>
@@ -26,7 +26,7 @@
                         </span>
                       </h1>
                     </div>
-                    <div data-packed="true" v-bind:style= "[window.width > 600 ? {'width': '498px', 'padding': '15px 0 30px 0'} : { width: '100vw', 'padding': '15px 30px 0 30px' }]" id="comp-jy67613u">
+                    <div data-packed="true" v-bind:style="[window.width > 600 ? {'width': '498px', 'padding': '15px 0 30px 0'} : { width: '100vw', 'padding': '15px 30px 0 30px' }]" id="comp-jy67613u">
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#464646;">
                           <span style="font-size:18px;">
