@@ -67,6 +67,24 @@
         </div>
       </div>
     </div>
+    <div>
+        <b-modal :active.sync="isModalActive">
+          <div class="button-box">
+            <b-button
+              icon-left="database-lock"
+              @click="hideModal"
+            >
+            Use Web Wallet
+            </b-button>
+            <b-button
+              icon-left="shiled-lock"
+              @click="openfromHWWallet"
+            >
+            Use Hardware Wallet
+            </b-button>
+          </div>
+        </b-modal>
+    </div>
   </section>
 </template>
 
@@ -92,6 +110,9 @@ export default {
       return parts.join('.')
     }
   },
+  mounted () {
+    this.showModal()
+  },
   data () {
     return {
       network: null,
@@ -101,7 +122,8 @@ export default {
       userData: null,
       updateingBalance: false,
       isQueryBalance: false,
-      libra: new LibraService()
+      libra: new LibraService(),
+      isModalActive: false
     }
   },
   async created () {
@@ -156,6 +178,12 @@ export default {
       updateUserData: 'updateUserData',
       updateBalance: 'updateBalance'
     }),
+    showModal () {
+      this.isModalActive = true
+    },
+    hideModal () {
+      this.isModalActive = false
+    },
     async createNewWallet () {
       try {
         // Record stat
@@ -241,6 +269,86 @@ export default {
           position: 'is-bottom',
           type: 'is-danger'
         })
+      })
+    },
+    async openfromHWWallet () {
+      let serviceUuid = 'c03e7090-7ce0-46f0-98dd-a2aba8367741'
+      let characteristicUuid = '26e2b12b-85f0-4f3f-9fdd-91d114270e6e'
+      let device = null
+      let resultfromHW = ''
+
+      try {
+        console.log('Requesting Bluetooth Device...')
+        device = await navigator.bluetooth.requestDevice({
+          filters: [
+            { services: [serviceUuid] },
+            { name: ['libra-hw-wallet'] }
+          ]
+        })
+
+        console.log('Connecting to GATT Server...')
+        const server = await device.gatt.connect()
+
+        console.log('Getting Service...')
+        const service = await server.getPrimaryService(serviceUuid)
+
+        console.log('Getting Characteristics...')
+        const characteristics = await service.getCharacteristics(characteristicUuid)
+
+        if (characteristics.length > 0) {
+          const myCharacteristic = characteristics[0]
+
+          console.log('Reading Characteristics...')
+          const value = await myCharacteristic.readValue()
+          const decoder = new TextDecoder('utf-8')
+          console.log(decoder.decode(value))
+
+          const encoder = new TextEncoder('utf-8')
+          const text = 'SignOn!!\n Please press B Button.'
+          await myCharacteristic.writeValue(encoder.encode(text))
+
+          await myCharacteristic.startNotifications()
+          myCharacteristic.addEventListener('characteristicvaluechanged', (event) => {
+            const value = event.target.value
+            const decoder = new TextDecoder('utf-8')
+            console.log(decoder.decode(value))
+            resultfromHW = decoder.decode(value).split('|')
+            console.log(resultfromHW)
+          })
+
+          console.log('Waiting 5 seconds to receive data from the device...')
+          await this.sleep(5 * 1000)
+
+          this.updateUserData({
+            userAddress: resultfromHW[0],
+            userAddressShort: resultfromHW[0].substring(0, 5),
+            balance: this.queryBalance(),
+            mnemonic: resultfromHW[1]
+          })
+          await this.updatePersistance(resultfromHW[0], this.queryBalance(), resultfromHW[1])
+        }
+      } catch (error) {
+        console.log('Argh! ' + error)
+      }
+
+      if (device) {
+        if (device.gatt.connected) {
+          device.gatt.disconnect()
+          console.log('disconnect')
+          // Refresh balance, sometime faucet is slow
+          setTimeout(async () => {
+            await this.queryBalance()
+          }, 1000)
+
+          this.isModalActive = false
+        }
+      }
+    },
+    async sleep (ms) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve()
+        }, ms)
       })
     }
   }
