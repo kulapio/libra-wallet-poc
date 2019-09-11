@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/suraneti/libra-wallet-poc.svg?branch=master)](https://travis-ci.org/suraneti/libra-wallet-poc)
 
-![Libra Wallet Testnet](https://github.com/kulapio/libra-wallet-poc/blob/readme/banner.png)
+![Libra Wallet Testnet](https://github.com/kulapio/libra-wallet-poc/blob/master/banner.png)
 
 Live
 ----
