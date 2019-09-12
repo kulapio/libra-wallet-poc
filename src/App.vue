@@ -12,7 +12,7 @@
         class="header-image"
       >
     </router-link>
-    <router-view/>
+    <router-view/>  
     <Footer/>
   </div>
 </template>
