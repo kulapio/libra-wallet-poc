@@ -1,6 +1,29 @@
 <template>
   <section class="wallet-container hero is-medium is-primary is-bold">
     <div class="wallet-body">
+      <div class="widget-container">
+         <b-button
+            @click="openfromHWWallet"
+            style="margin-right: 10px;"
+            rounded
+            size="is-small"
+            icon-left="cast"
+          >
+            Hardware wallet
+        </b-button>
+        <b-tooltip label="More information click" :position="tooltipPosition">
+          <div
+            style="display: flex; alignItems: center; cursor: pointer;"
+            @click="openHardwareRepo"
+          >
+          <b-icon
+            style="font-size: 20px;"
+            icon="alert-circle-outline"
+            size="is-small"
+          />
+          </div>
+        </b-tooltip>
+      </div>
       <div
         v-if="!userAddress"
         class="creating-wallet"
@@ -67,24 +90,6 @@
         </div>
       </div>
     </div>
-    <div>
-        <b-modal :active.sync="isModalActive">
-          <div class="button-box">
-            <b-button
-              icon-left="database-lock"
-              @click="hideModal"
-            >
-            Use Web Wallet
-            </b-button>
-            <b-button
-              icon-left="shiled-lock"
-              @click="openfromHWWallet"
-            >
-            Use Hardware Wallet
-            </b-button>
-          </div>
-        </b-modal>
-    </div>
   </section>
 </template>
 
@@ -110,9 +115,6 @@ export default {
       return parts.join('.')
     }
   },
-  mounted () {
-    this.showModal()
-  },
   data () {
     return {
       network: null,
@@ -123,7 +125,7 @@ export default {
       updateingBalance: false,
       isQueryBalance: false,
       libra: new LibraService(),
-      isModalActive: false
+      tooltipPosition: window.innerWidth >= 1366 ? 'is-top' : 'is-left'
     }
   },
   async created () {
@@ -178,12 +180,6 @@ export default {
       updateUserData: 'updateUserData',
       updateBalance: 'updateBalance'
     }),
-    showModal () {
-      this.isModalActive = true
-    },
-    hideModal () {
-      this.isModalActive = false
-    },
     async createNewWallet () {
       try {
         // Record stat
@@ -237,6 +233,9 @@ export default {
     async updatePersistance (userAddress, balance, mnemonic) {
       this.userData.update(userAddress, balance, mnemonic)
       this.userData.save()
+    },
+    openHardwareRepo () {
+      window.location.href = 'https://github.com/iyawat/M5Stack_libra_hw_wallet'
     },
     openSend () {
       this.$router.push({ name: 'ScanQR' })
@@ -339,8 +338,6 @@ export default {
           setTimeout(async () => {
             await this.queryBalance()
           }, 1000)
-
-          this.isModalActive = false
         }
       }
     },
@@ -364,8 +361,25 @@ export default {
 }
 .wallet-body {
   padding-bottom: 2rem;
-  padding-top: 2rem;
+  // padding-top: 2rem;
 }
+.widget-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem 0.5rem 2rem 0.5rem;
+  width: 100%;
+}
+.beta-badge {
+  margin-left: 5px;
+  font-size: 9px;
+  background-color: red;
+  border-radius: 10px;
+  width: 30px;
+  color: white;
+  height: 14px;
+}
+
 .creating-wallet {
   padding-top: 50px;
 
@@ -426,7 +440,14 @@ export default {
   }
   .wallet-body {
     padding-bottom: 6rem;
-    padding-top: 6rem;
+    // padding-top: 6rem;
+  }
+  .widget-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0.5rem 1rem 6rem 1rem;
+    width: 100%;
   }
   .button-box {
     margin-top: 60px;
