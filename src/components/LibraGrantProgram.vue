@@ -20,7 +20,7 @@
                         <span style="color:#3E2C8F;">
                           <span style="font-weight:bold;">
                             <span style="font-size:18px;">
-                              <span style="font-family:roboto-thin,roboto,sans-serif;">A Libracamp grant plan project.</span>
+                              <span style="font-family:roboto-thin,roboto,sans-serif;">{{ $t('libracampGrantPlan') }}</span>
                             </span>
                           </span>
                         </span>
@@ -30,7 +30,7 @@
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#464646;">
                           <span style="font-size:18px;">
-                            <span style="font-family:roboto-thin,roboto,sans-serif;">This project is participating in the non-profit grant plan of libracamp.com.</span>
+                            <span style="font-family:roboto-thin,roboto,sans-serif;">{{ $t('libracampGrantPlanDesc') }}</span>
                           </span>
                         </span>
                       </h1>
@@ -38,14 +38,14 @@
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#464646;">
                           <span style="font-size:18px;">
-                            <span style="font-family:roboto-thin,roboto,sans-serif;">Libracamp supports open source projects with 100 coding hours from our lead devs and $2,000. </span>
+                            <span style="font-family:roboto-thin,roboto,sans-serif;">{{ $t('libracampDesc') }}</span>
                           </span>
                         </span>
                       </h1>
                       <h1 class="font_0" style="font-size:18px; line-height:1.5em;">
                         <span style="color:#4A4A4A;">
                           <span style="font-size:18px;">
-                            <span style="font-family:roboto-thin,roboto,sans-serif;">Visit</span>
+                            <span style="font-family:roboto-thin,roboto,sans-serif;">{{ $t('visit') }}</span>
                           </span>
                         </span>
                         <span style="color:#0076D1;">
@@ -57,7 +57,7 @@
                         </span>
                         <span style="color:#4A4A4A;">
                           <span style="font-size:18px;">
-                            <span style="font-family:roboto-thin,roboto,sans-serif;">to learn more.</span>
+                            <span style="font-family:roboto-thin,roboto,sans-serif;">{{ $t('toLearnMore') }}</span>
                           </span>
                         </span>
                       </h1>

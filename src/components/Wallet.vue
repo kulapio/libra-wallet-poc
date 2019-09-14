@@ -9,9 +9,9 @@
             size="is-small"
             icon-left="cast"
           >
-            Hardware wallet
+            {{ $t('hardwareWallet') }}
         </b-button>
-        <b-tooltip label="More information click" :position="tooltipPosition">
+        <b-tooltip :label="$t('hardwareWalletInfo')" :position="tooltipPosition">
           <div
             style="display: flex; alignItems: center; cursor: pointer;"
             @click="openHardwareRepo"
@@ -29,7 +29,7 @@
         class="creating-wallet"
       >
         <span>
-          Creating your wallet ...
+          {{ $t('creatingWallet') }}
         </span>
         <vue-loading
           type="bars"
@@ -44,7 +44,7 @@
         />
         <div class="wallet-address is-dots">
           <div class="wallet-content" @click="onCopy">
-            Wallet: {{ shortUserAddr }}
+            {{ $t('wallet') }}: {{ shortUserAddr }}
             <b-icon
               style="margin-left: 5px;"
               icon="content-copy"
@@ -57,7 +57,7 @@
           <span>{{ balance | numberWithCommas }}</span>
         </div>
         <div v-else class="balance">
-          <span>Loading ...</span>
+          <span>{{ $t('loading') }}</span>
         </div>
         <div class="refresh">
           <a @click="refreshBalance">
@@ -65,7 +65,7 @@
               icon="refresh"
               size="is-small"
             />
-            {{ isQueryBalance ? 'Refreshing ...' : 'Click to refresh' }}
+            {{ isQueryBalance ? $t('refreshing') : $t('clickToRefresh') }}
           </a>
         </div>
         <div class="button-box">
@@ -73,19 +73,19 @@
             icon-left="send"
             @click="openSend"
           >
-            Send
+            {{ $t('send') }}
           </b-button>
           <b-button
             icon-left="qrcode"
             @click="openReceive"
           >
-            Receive
+            {{ $t('receive') }}
           </b-button>
           <b-button
             icon-left="history"
             @click="openTransaction"
           >
-            Transaction History
+            {{ $t('transactionHistory') }}            
           </b-button>
         </div>
       </div>
@@ -257,14 +257,14 @@ export default {
     onCopy () {
       this.$copyText(this.userAddress).then((e) => {
         this.$toast.open({
-          message: 'Copied!',
+          message: this.$t('copy'),
           position: 'is-bottom',
           type: 'is-success'
         })
       }, (e) => {
         this.$toast.open({
           duration: 5000,
-          message: 'Can\'t copy',
+          message: this.$t('cantCopy'),
           position: 'is-bottom',
           type: 'is-danger'
         })

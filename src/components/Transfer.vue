@@ -4,7 +4,7 @@
       :active="isTransfering"
       spinner="bar-fade-scale"
       color="#9b67df"
-      text="Transfering ..."
+      :text="$t('transfering')"
       is-full-screen
     />
     <section class="wallet-container hero is-medium is-primary is-bold">
@@ -13,24 +13,24 @@
           <b-field :label="labelHead">
             <b-input :disabled="!editable"
               v-model="labelValue"
-              placeholder="Destination address"
+              :placeholder="$t('destinationAddress')"
             />
           </b-field>
         </div>
         <div v-else class="input-box">
-          <b-field label="Destination Address">
+          <b-field :label="$t('destinationAddress')">
             <b-input :disabled="!editable"
               v-model="address"
-              placeholder="Destination address"
+              :placeholder="$t('destinationAddress')"
             />
           </b-field>
         </div>
         <div class="input-box">
-          <b-field label="Amount">
+          <b-field :label="$t('amount')">
             <b-input :disabled="!editable"
               v-model="amount"
               step="0.000001"
-              placeholder="Amount"
+              :placeholder="$t('amount')"
               type="number"
             />
           </b-field>
@@ -40,10 +40,10 @@
             type="is-success"
             @click="transfer"
           >
-            Confirm
+            {{ $t('confirm') }}
           </b-button>
           <b-button @click="back">
-            Cancel
+            {{ $t('cancel') }}
           </b-button>
         </div>
       </div>
