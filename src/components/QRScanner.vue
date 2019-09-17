@@ -18,13 +18,13 @@
             icon-left="pencil"
             @click="sendWithManualAddress"
           >
-            Send Manually
+            {{ $t('sendManually') }}
           </b-button>
           <b-button
             icon-left="arrow-left"
             @click="back"
           >
-            Back
+            {{ $t('back') }}
           </b-button>
       </div>
     </section>

@@ -2,7 +2,7 @@
   <div class="transaction-container">
     <div class="card">
       <div class="address content">
-        <div v-if="!fetched">Loading transactions ...</div>
+        <div v-if="!fetched">{{ $t('loadingTransactions') }}</div>
         <div v-if="fetched" class="align-center">
           <div
             v-for="(transaction, index) in transactions"
@@ -23,15 +23,15 @@
             </div>
             <div class="transactions-body">
               <div v-bind:style= "[transaction.event === 'sent' ? {'color': '#483DB1'} : { 'color': '#55C81F' }]">
-                {{ transaction.event.toUpperCase() }}
+                {{ transaction.event === 'received' ? $t('received') : $t('sent')  }}
               </div>
               <div v-bind:style= "[transaction.event === 'sent' ? {'color': '#483DB1'} : { 'color': '#55C81F' }]">
-                {{ Number(transaction.amount).toLocaleString() }} Coins
+                {{ Number(transaction.amount).toLocaleString() }} {{ $t('coins') }}
               </div>
             </div>
             <div v-if="window.width < 600" class="transactions-footer">
                <div style="color: #7957d5; padding-right: 5px;">
-                {{ transaction.event === 'sent' ? 'To address:' : 'From address:' }}
+                {{ transaction.event === 'sent' ? `${$t('toAddress')}:` : `${$t('fromAddress')}:` }}
               </div>
               <div>
                 {{ transaction.event === 'sent' ? shortAddress(transaction.toAddress) : shortAddress(transaction.fromAddress) }}
@@ -39,7 +39,7 @@
             </div>
             <div v-if="window.width >= 600" class="transactions-footer">
               <div style="color: #7957d5; padding-right: 5px;">
-                {{ transaction.event === 'sent' ? 'To address:' : 'From address:' }}
+                {{ transaction.event === 'sent' ? `${$t('toAddress')}:` : `${$t('fromAddress')}:` }}
               </div>
               <div>
                 {{ transaction.event === 'sent' ? transaction.toAddress : transaction.fromAddress }}
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="button-box">
-        <b-button icon-left="arrow-left" @click="back">Back</b-button>
+        <b-button icon-left="arrow-left" @click="back">{{ $t('back') }}</b-button>
       </div>
     </div>
   </div>

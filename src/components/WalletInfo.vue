@@ -15,7 +15,7 @@
           icon-left="content-copy"
           @click="copyAddress"
         >
-          Copy to clipboard
+          {{ $t('copyToClipboard') }}
         </b-button>
         <social-sharing
           :url="shareUrl"
@@ -33,7 +33,7 @@
               class="share-facebook-btn"
             >
               <b-button icon-left="facebook">
-                Share your wallet
+                {{ $t('shareYourWallet') }}
               </b-button>
             </network>
           </div>
@@ -42,7 +42,7 @@
           icon-left="arrow-left"
           @click="back"
         >
-          Back
+          {{ $t('back') }}
         </b-button>
       </div>
     </div>
@@ -98,14 +98,14 @@ export default {
     copyText (text) {
       this.$copyText(text).then((e) => {
         this.$toast.open({
-          message: 'Copied!',
+          message: this.$t('copy'),
           position: 'is-bottom',
           type: 'is-success'
         })
       }, (e) => {
         this.$toast.open({
           duration: 5000,
-          message: 'Can\'t copy',
+          message: this.$t('cantCopy'),
           position: 'is-bottom',
           type: 'is-danger'
         })

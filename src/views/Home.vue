@@ -3,7 +3,7 @@
     <Wallet/>
     <div id="comp-jy5zp152inlineContent-gridContainer">
       <img id="comp-jy5zsjvkimgimage" style="object-position: 50% 50%; width: 30px; height: 30px; object-fit: cover;" alt="libracamp_mini_2x.png" data-type="image" itemprop="image" src="@/assets/img/libra-camp/libracamp_mini_2x.png">
-      <span style="font-size:24px;vertical-align:super;margin-left:10px;">A Libracamp grant plan project.</span>
+      <span style="font-size:24px;vertical-align:super;margin-left:10px;">{{ $t('libracampGrantPlan') }}</span>
     </div>
   </div>
 </template>

@@ -4,10 +4,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ wallets ? Number(wallets).toLocaleString() : 'Loading...' }}
+            {{ wallets ? Number(wallets).toLocaleString() : $t('loading') }}
           </h1>
           <h2 class="subtitle">
-            Wallets
+            {{ $t('wallets') }}
           </h2>
         </div>
       </div>
@@ -16,10 +16,10 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ transactions ? Number(transactions).toLocaleString() : 'Loading...' }}
+            {{ transactions ? Number(transactions).toLocaleString() : $t('loading') }}
           </h1>
           <h2 class="subtitle">
-            Transactions
+            {{ $t('transactions') }}
           </h2>
         </div>
       </div>
