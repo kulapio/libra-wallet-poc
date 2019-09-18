@@ -3,9 +3,14 @@
     <section class="hero is-primary">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
-            {{ wallets ? Number(wallets).toLocaleString() : $t('loading') }}
-          </h1>
+          <div class="title">
+            <div v-if="!wallets">
+              {{ $t('loading') }}
+            </div>
+            <div v-if="wallets">
+              {{ Number(this.wallets).toLocaleString() }}
+            </div>
+          </div>
           <h2 class="subtitle">
             {{ $t('wallets') }}
           </h2>
@@ -16,7 +21,12 @@
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
-            {{ transactions ? Number(transactions).toLocaleString() : $t('loading') }}
+            <div v-if="!transactions">
+              {{ $t('loading') }}
+            </div>
+            <div v-if="transactions">
+              {{ Number(this.transactions).toLocaleString() }}
+            </div>
           </h1>
           <h2 class="subtitle">
             {{ $t('transactions') }}

@@ -9,7 +9,6 @@
       </div>
       <b-dropdown
         style="margin-left: auto;"
-        hoverable
         aria-role="list"
         position="is-bottom-left"
       >
