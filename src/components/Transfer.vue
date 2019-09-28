@@ -118,6 +118,11 @@ export default {
         const mnemonic = this.mnemonic.split(';')[0]
         const toAddress = this.address
         await this.libra.transfer(mnemonic, toAddress, this.amount)
+        // Fire event to Google Analytic
+        this.$ga.event({
+          eventCategory: 'Transaction',
+          eventAction: 'Transfer'
+        })
         // For peer to peer transfer
         if (this.labelHead === '') {
           this.$router.push({ name: 'Wallet' })

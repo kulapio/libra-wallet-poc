@@ -155,7 +155,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-    // Creating a new wallet
+      // Creating a new wallet
     } else {
       const data = await this.createNewWallet()
       await this.updatePersistance(data.address, data.balance, data.mnemonic)
@@ -210,6 +210,13 @@ export default {
           mnemonic: createdResult.mnemonic + ';1',
           balance: this.AMOUNT_TO_MINT.toString(10)
         }
+
+        // Fire event to google analytic
+        this.$ga.event({
+          eventCategory: 'Wallet',
+          eventAction: 'Create'
+        })
+
         return wallet
       } catch (error) {
         console.log(error)
@@ -238,12 +245,24 @@ export default {
       window.location.href = 'https://github.com/iyawat/M5Stack_libra_hw_wallet'
     },
     openSend () {
+      this.$ga.event({
+        eventCategory: 'Wallet',
+        eventAction: 'Transfer'
+      })
       this.$router.push({ name: 'ScanQR' })
     },
     openReceive () {
+      this.$ga.event({
+        eventCategory: 'Wallet',
+        eventAction: 'Receive'
+      })
       this.$router.push({ name: 'Receive', query: { address: this.userAddress } })
     },
     openTransaction () {
+      this.$ga.event({
+        eventCategory: 'Wallet',
+        eventAction: 'History'
+      })
       this.$router.push({ name: 'Transactions', query: { address: this.userAddress } })
     },
     async doUpdateBalance () {
