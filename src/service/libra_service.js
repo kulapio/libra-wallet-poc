@@ -49,18 +49,18 @@ class Libra {
 
     // Transfer
     const response = await client.transferCoins(account, toAddress, amountToTransfer)
-    if (response.acStatus !== LibraAdmissionControlStatus.ACCEPTED) {
-      console.log(JSON.stringify(response))
-      throw new Error(`admission_control failed with status ${LibraAdmissionControlStatus[response.acStatus]}`)
-    }
+    // if (response.acStatus !== LibraAdmissionControlStatus.ACCEPTED) {
+    //   console.log(JSON.stringify(response))
+    //   throw new Error(`admission_control failed with status ${LibraAdmissionControlStatus[response.acStatus]}`)
+    // }
 
     // Ensure sender account balance was reduced accordingly
-    await response.awaitConfirmation(client)
-    const afterAccountState = await client.getAccountState(account.getAddress())
-    if (afterAccountState.balance.toString(10) !== beforeAccountState.balance.minus(amountToTransfer).toString(10)) {
-      console.log(JSON.stringify(response))
-      throw new Error(`transfer failed`)
-    }
+    // await response.awaitConfirmation(client)
+    // const afterAccountState = await client.getAccountState(account.getAddress())
+    // if (afterAccountState.balance.toString(10) !== beforeAccountState.balance.minus(amountToTransfer).toString(10)) {
+    //   console.log(JSON.stringify(response))
+    //   throw new Error(`transfer failed`)
+    // }
 
     return {
       response: response,
