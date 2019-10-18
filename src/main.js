@@ -5,6 +5,7 @@ import Buefy from 'buefy'
 import VueLoading from 'vue-loading-template'
 import VueClipboard from 'vue-clipboard2'
 import SocialSharing from 'vue-social-sharing'
+import VueAnalytics from 'vue-analytics'
 
 // Styles
 import 'buefy/dist/buefy.css'
@@ -21,6 +22,10 @@ Vue.use(SocialSharing)
 Vue.use(VueLoading)
 Vue.use(VueClipboard)
 VueClipboard.config.autoSetContainer = true // add this line
+Vue.use(VueAnalytics, {
+  id: 'UA-148960913-1',
+  router
+})
 
 Vue.config.productionTip = false
 
