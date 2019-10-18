@@ -23,7 +23,7 @@ Vue.use(VueLoading)
 Vue.use(VueClipboard)
 VueClipboard.config.autoSetContainer = true // add this line
 Vue.use(VueAnalytics, {
-  id: 'UA-148960913-1',
+  id: 'UA-142976502-1',
   router
 })
 
