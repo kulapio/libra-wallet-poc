@@ -85,7 +85,7 @@
             icon-left="history"
             @click="openTransaction"
           >
-            {{ $t('transactionHistory') }}            
+            {{ $t('transactionHistory') }}
           </b-button>
         </div>
       </div>

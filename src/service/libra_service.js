@@ -1,5 +1,5 @@
 const BigNumber = require('bignumber.js')
-const { LibraClient, LibraWallet, LibraAdmissionControlStatus } = require('kulap-libra')
+const { LibraClient, LibraWallet } = require('kulap-libra')
 const axios = require('axios')
 const moment = require('moment')
 
@@ -45,7 +45,7 @@ class Libra {
     const amountToTransfer = BigNumber(amount).times(1e6) // Amount in micro libras
 
     // Stamp account state before transfering
-    const beforeAccountState = await client.getAccountState(account.getAddress())
+    await client.getAccountState(account.getAddress())
 
     // Transfer
     const response = await client.transferCoins(account, toAddress, amountToTransfer)
