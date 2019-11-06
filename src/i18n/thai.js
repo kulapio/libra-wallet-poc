@@ -7,7 +7,7 @@ const thai = {
   libracampGrantPlan: 'โครงการในแผนมอบทุน ลิบร้าแคมป์',
 
   // Home (Views)
-  home: 'หน้าแรก',
+  merchant: 'ร้านค้า',
   stats: 'สถิติ',
   about: 'เกี่ยวกับเรา',
   blog: 'บล็อก',

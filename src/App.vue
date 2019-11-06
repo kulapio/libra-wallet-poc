@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav" style="display: flex; justify-content: center;">
       <div class="menu-container">
-        <router-link to="/">{{ $t('home') }}</router-link> |
+        <router-link to="/">{{ $t('wallet') }}</router-link> |
+        <router-link to="/merchant">{{ $t('merchant') }}</router-link> |
         <router-link to="/stats">{{ $t('stats') }}</router-link> |
         <router-link to="/about">{{ $t('about') }}</router-link> |
         <router-link v-bind:to="`/blog?locale=${locale}`">{{ $t('blog') }}</router-link>

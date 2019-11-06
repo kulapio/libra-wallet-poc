@@ -7,7 +7,7 @@ const english = {
   libracampGrantPlan: 'A Libracamp grant plan project.',
 
   // Home (Views)
-  home: 'Home',
+  merchant: 'Merchant',
   stats: 'Stats',
   about: 'About',
   blog: 'Blog',
