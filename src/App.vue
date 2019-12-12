@@ -1,5 +1,19 @@
 <template>
   <div id="app">
+    <div class="localize-container">
+      <b-dropdown
+        style="margin-left: auto;"
+        aria-role="list"
+        position="is-bottom-left"
+      >
+        <div slot="trigger" class="dropdown-container">
+          <span id="localize">{{ locale.toUpperCase() }}</span>
+          <b-icon icon="menu-down"></b-icon>
+        </div>
+        <b-dropdown-item aria-role="listitem" @click="switchLocale('en')">English (EN)</b-dropdown-item>
+        <b-dropdown-item aria-role="listitem" @click="switchLocale('th')">ไทย (TH)</b-dropdown-item>
+      </b-dropdown>
+    </div>
     <div id="nav" style="display: flex; justify-content: center;">
       <div class="menu-container">
         <router-link to="/">{{ $t('wallet') }}</router-link> |
@@ -8,18 +22,6 @@
         <router-link to="/about">{{ $t('about') }}</router-link> |
         <router-link v-bind:to="`/blog?locale=${locale}`">{{ $t('blog') }}</router-link>
       </div>
-      <b-dropdown
-        style="margin-left: auto;"
-        aria-role="list"
-        position="is-bottom-left"
-      >
-        <div slot="trigger" class="dropdown-container">
-          <span>{{ locale.toUpperCase() }}</span>
-          <b-icon icon="menu-down"></b-icon>
-        </div>
-        <b-dropdown-item aria-role="listitem" @click="switchLocale('en')">English (EN)</b-dropdown-item>
-        <b-dropdown-item aria-role="listitem" @click="switchLocale('th')">ไทย (TH)</b-dropdown-item>
-      </b-dropdown>
     </div>
     <router-link to="/">
       <img
@@ -67,7 +69,8 @@ export default {
   color: #2c3e50;
 }
 #nav {
-  padding: 30px 5px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 #nav a {
   font-weight: bold;
@@ -75,6 +78,9 @@ export default {
 }
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+#localize {
+  font-size: 12px;
 }
 .header-image {
   height: 70px;
@@ -91,11 +97,23 @@ export default {
   align-items: center;
   cursor: pointer;
 }
+.localize-container {
+  display: flex;
+  padding: 5px 5px 0px 5px;
+}
 
 /* on desktop */
 @media only screen and (min-width: 1025px) {
   #nav {
-    padding: 30px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  #localize {
+    font-size: 1vw;
+  }
+  .localize-container {
+    display: flex;
+    padding: 10px 20px 0px 20px;
   }
 }
 </style>
