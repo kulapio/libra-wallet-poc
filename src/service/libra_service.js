@@ -49,6 +49,10 @@ class Libra {
 
     // Transfer
     const response = await client.transferCoins(account, toAddress, amountToTransfer)
+
+    // temporary wait 2 seconds for consensus
+    await new Promise((resolve) => { setTimeout(() => { resolve() }, 2000) })
+
     // if (response.acStatus !== LibraAdmissionControlStatus.ACCEPTED) {
     //   console.log(JSON.stringify(response))
     //   throw new Error(`admission_control failed with status ${LibraAdmissionControlStatus[response.acStatus]}`)
