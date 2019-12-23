@@ -10,7 +10,7 @@ export default new Vuex.Store({
     balance: '',
     mnemonic: '',
     toAddress: '',
-    AMOUNT_TO_MINT: '100'
+    AMOUNT_TO_MINT: '1000'
   },
   actions: {
     updateUserData ({ commit }, { userAddress, userAddressShort, balance, mnemonic }) {
