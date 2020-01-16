@@ -2,9 +2,7 @@
   <div class="wallet-container">
     <div class="card">
       <div class="logo">
-        <img src="@/assets/img/class-cafe/8-class-cafe-03.png"
-          srcset="@/assets/img/class-cafe/8-class-cafe-03@2x.png 2x,
-                  @/assets/img/class-cafe/8-class-cafe-03@3x.png 3x"
+        <img src="@/assets/img/kulap/Kulap_SQ_Color.png" width=145
           class="-Class-Cafe_03">
       </div>
       <div class="receipt">
