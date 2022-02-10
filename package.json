@@ -36,7 +36,7 @@
     "@vue/eslint-config-standard": "^3.0.5",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "jest": "^24.8.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "sass": "^1.22.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
